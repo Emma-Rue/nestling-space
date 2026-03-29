@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Services — Nestling Space</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ====== CURSOR ====== -->
+  <div class="cursor-dot"  id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- ====== SCROLL PROGRESS ====== -->
+  <div id="scroll-progress"></div>
+
+  <!-- ====== LOADER ====== -->
+  <div id="loader">
+    <div class="loader-bloom">
+      <span></span><span></span><span></span>
+    </div>
+    <p class="loader-text">Nestling Space…</p>
+  </div>
+
+  <!-- ====== NAVIGATION ====== -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Nestling <span>Space</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#founder">Founder</a></li>
+      <li><a href="#contact" class="nav-cta">Reach Out</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+<div class="mobile-menu" id="mobile-menu">
+    <a href="#about"    onclick="closeMenu()">About</a>
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#founder"  onclick="closeMenu()">Founder</a>
+    <a href="#affirmation" onclick="closeMenu()">Affirmations</a>
+    <a href="#contact"  onclick="closeMenu()">Contact</a>
+  </div>
+
+<main style="padding-top: 100px; min-height: 80vh;">
+
+  <section id="all-services" style="background: var(--cream);">
+    <div class="reveal">
+      <h2 class="section-title">Our Full Range of <em>Services</em></h2>
+      <div class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px;">
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">1. Individual Counseling</h3>
+            <p class="card-desc">A safe space where individuals can explore thoughts, emotions, and life challenges. Helps manage stress, anxiety, depression, trauma, grief.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">2. Inner Child Healing Therapy</h3>
+            <p class="card-desc">Helps individuals identify unresolved childhood wounds affecting their relationships today. Includes guided reflection and emotional processing.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">3. Couples & Marriage Counseling</h3>
+            <p class="card-desc">Helps couples improve communication, resolve conflicts, rebuild trust, and strengthen emotional connection.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">4. Family Counseling</h3>
+            <p class="card-desc">Helps families navigate conflicts, improve communication, and rebuild healthy relationships.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">5. Trauma & Emotional Healing</h3>
+            <p class="card-desc">Support for individuals who have experienced traumatic events, abuse, loss, or deep emotional wounds.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">6. Stress, Anxiety & Burnout</h3>
+            <p class="card-desc">Supports individuals experiencing overwhelming stress or emotional exhaustion to manage stress and regulate emotions.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">7. Women's Emotional Wellness</h3>
+            <p class="card-desc">A space for women navigating life transitions, motherhood, identity struggles to rediscover voice and emotional strength.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">8. Group Healing Sessions</h3>
+            <p class="card-desc">Facilitated small-group sessions where participants share experiences, gain support, and learn together.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">9. Temperament & Personality</h3>
+            <p class="card-desc">Helps individuals understand their natural temperament and emotional responses for healthier self-awareness.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">10. Faith-Based Counseling</h3>
+            <p class="card-desc">Optional service for those desiring spiritual guidance alongside counseling, integrating biblical principles.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">11. Personal Development Programs</h3>
+            <p class="card-desc">Workshops designed to help individuals grow emotionally and relationally, covering topics like emotional intelligence.</p>
+        </div>
+        
+        <div class="service-card" style="padding: 30px; background: var(--white); border-radius: 16px; box-shadow: var(--shadow-soft);">
+            <h3 class="card-title">12. Online Counseling</h3>
+            <p class="card-desc">Secure virtual counseling sessions for individuals who prefer remote support or live outside the local area.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="reveal">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand-name">Nestling <span>Space</span></div>
+        <p>A safe sanctuary for your mind, heart, and healing journey. You are always welcome here.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" class="social-btn" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+          <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        </div>
+      </div>
+
+      
+      <div class="footer-col" style="margin-right: 20px;">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="index.html#about">About Us</a></li>
+          <li><a href="services.html">All 12 Services</a></li>
+          <li><a href="index.html#founder">Our Founder</a></li>
+          <li><a href="inquiries.html">Service Inquiry</a></li>
+          <li><a href="bookings.html">Book a Session</a></li>
+          <li><a href="feedback.html">Give Feedback</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal & Resources</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="refund-policy.html">Refund Policy</a></li>
+          <li><a href="terms-and-conditions.html">Terms & Conditions</a></li>
+        </ul>
+      </div>
+
+
+      
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Nestling Space. Crafted with <span>♥</span> for your wellbeing.</p>
+      <p>Made by Dr. M. Mugabe &amp; Team</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       JAVASCRIPT
+  ========================================== -->
+  <script src="scripts.js"></script>
+</body>
+</html>
