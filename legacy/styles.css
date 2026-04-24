@@ -2,15 +2,15 @@
        DESIGN TOKENS & CSS VARIABLES
     ============================================= */
     :root {
-      --cream:        #FAF7F2;
-      --cream-dark:   #F3EDE3;
-      --sage:         #8BAF8E;
-      --sage-light:   #B8D4BB;
-      --sage-pale:    #DCE9DC;
-      --blush:        #E8C5BC;
-      --blush-light:  #F2DEDA;
-      --beige:        #D6C4AA;
-      --beige-dark:   #C4AC8E;
+      --cream:        #FCF1EE;
+      --cream-dark:   #FDF3F0;
+      --sage:         #6C8066;
+      --sage-light:   #A5BEA2;
+      --sage-pale:    #DFEAD6;
+      --blush:        #F6CFC2;
+      --blush-light:  #FCF1EE;
+      --beige:        #E5D9D2;
+      --beige-dark:   #C5B8B1;
       --text-dark:    #3A3028;
       --text-mid:     #6B5E52;
       --text-soft:    #9A8C82;

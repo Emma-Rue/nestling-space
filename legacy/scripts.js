@@ -187,10 +187,21 @@
       if (v1 && v2 && v3) {
         submitBtn.textContent = 'Sending…';
         submitBtn.disabled = true;
-        setTimeout(() => {
+        
+        const formData = new FormData(form);
+        // TODO: Replace with your actual Web3Forms access key
+        formData.append("access_key", "YOUR_ACCESS_KEY_HERE");
+        formData.append("subject", "New Message from Nestling Space");
+
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        }).then(response => {
           form.style.display = 'none';
           success.style.display = 'block';
-        }, 1200);
+        }).catch(error => {
+          submitBtn.textContent = 'Error. Please email directly.';
+        });
       }
     });
 
