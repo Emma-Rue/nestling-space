@@ -407,7 +407,7 @@ export default function Home() {
           </div>
           <div className="form-group">
             <label>Message</label>
-            <textarea name="message" rows="5" required></textarea>
+            <textarea name="message" rows={5} required></textarea>
           </div>
           <button type="submit" className="btn-submit">Send Inquiry</button>
         </form>
@@ -445,7 +445,7 @@ export default function Home() {
           </div>
           <div className="form-group">
             <label>Any notes for Dr. Mugabe?</label>
-            <textarea name="notes" rows="4"></textarea>
+            <textarea name="notes" rows={4}></textarea>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-soft)', marginBottom: '20px' }}>By booking, you consent to our Privacy Policy and Terms & Conditions.</p>
           <button type="submit" className="btn-submit">Request Booking 🤍</button>
@@ -476,7 +476,7 @@ export default function Home() {
           </div>
           <div className="form-group">
             <label>Feedback</label>
-            <textarea name="feedback" rows="6" placeholder="Tell us about your experience..." required></textarea>
+            <textarea name="feedback" rows={6} placeholder="Tell us about your experience..." required></textarea>
           </div>
           <div className="form-group">
             <label>Can we use your positive feedback anonymously in our testimonials?</label>
@@ -604,7 +604,7 @@ export default function Home() {
             </div>
             <div className="form-group" id="group-message">
               <label htmlFor="message">Your Message</label>
-              <textarea id="message" name="message" rows="5" placeholder="Share what's on your mind…"></textarea>
+              <textarea id="message" name="message" rows={5} placeholder="Share what's on your mind…"></textarea>
               <span className="error-msg">Please write a message.</span>
             </div>
             <button type="submit" className="btn-submit" id="submit-btn">
