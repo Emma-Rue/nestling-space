@@ -1,10 +1,182 @@
-"use client";
+﻿"use client";
+import Image from "next/image";
 import { useEffect } from 'react';
 import initScripts from './scripts';
 
+const coreValues = [
+  "Compassionate Empathy",
+  "Unwavering Confidentiality",
+  "Professionalism and Ethical Integrity",
+  "Cultural Sensitivity and Inclusivity",
+  "Holistic Well-being",
+  "Accessibility and Community Engagement",
+  "Client Empowerment",
+];
+
+const featuredServices = [
+  {
+    image: "/Images/service_individual_1775480745394.png",
+    alt: "Individual counselling",
+    title: "Individual Counselling",
+    description:
+      "Support for youth, adults, and the aged facing stress, grief, depression, anxiety, life transitions, and emotional overwhelm.",
+  },
+  {
+    image: "/Images/service_couples_1775480819650.png",
+    alt: "Marriage and relationship counselling",
+    title: "Marriage & Relationship Counselling",
+    description:
+      "Premarital guidance and marriage counselling focused on communication, conflict resolution, trust, intimacy, and emotional reconnection.",
+  },
+  {
+    image: "/Images/service_child_1775480856604.png",
+    alt: "Family counselling",
+    title: "Family Counselling",
+    description:
+      "Practical support for healthier family communication, parenting challenges, boundary setting, behavioural concerns, and generational healing.",
+  },
+  {
+    image: "/Images/service_group_1775480873131.png",
+    alt: "Workshops and group sessions",
+    title: "Workshops & Group Support",
+    description:
+      "School, community, and workplace sessions that build resilience, emotional literacy, stress management skills, and healthier relationships.",
+  },
+];
+
+const fullServices = [
+  {
+    title: "Youth Counselling",
+    description:
+      "Guidance for adolescents and young adults navigating identity, academic pressure, relationships, and emotional development.",
+  },
+  {
+    title: "Adult & Aged Therapy",
+    description:
+      "Therapy for anxiety, depression, grief, burnout, life transitions, and age-related psychological challenges.",
+  },
+  {
+    title: "Family Counselling",
+    description:
+      "Support for conflict resolution, family transitions, communication repair, and stronger home dynamics.",
+  },
+  {
+    title: "Parenting Support",
+    description:
+      "Positive, practical child-rearing guidance for parents facing behavioural, emotional, or relational challenges in the home.",
+  },
+  {
+    title: "Premarital Counselling",
+    description:
+      "Structured conversations and skill-building to help couples build a healthy foundation before marriage.",
+  },
+  {
+    title: "Marriage Counselling",
+    description:
+      "Help for couples dealing with communication breakdown, conflict, infidelity, intimacy concerns, and disconnection.",
+  },
+  {
+    title: "School-Based Counselling",
+    description:
+      "Direct emotional support for school children facing bullying, pressure, social difficulties, and mental health concerns.",
+  },
+  {
+    title: "Corporate Well-being Programs",
+    description:
+      "Tailored employee support focused on stress, burnout prevention, workplace conflict, and mentally healthy cultures.",
+  },
+  {
+    title: "Mental Health Workshops",
+    description:
+      "Interactive training for schools, companies, parents, youth groups, and community organizations.",
+  },
+  {
+    title: "Boot Camps & Training Packages",
+    description:
+      "Custom sessions on awareness, resilience, communication, conflict resolution, and positive parenting skills.",
+  },
+  {
+    title: "Online Counselling",
+    description:
+      "Confidential telehealth sessions for clients across Zimbabwe and in the diaspora who need remote access.",
+  },
+  {
+    title: "Group Counselling Sessions",
+    description:
+      "Facilitated spaces for shared learning, mutual support, and healing around common emotional or relational themes.",
+  },
+];
+
+const deliveryMethods = [
+  "Face-to-face counselling in a private and confidential setting",
+  "Online telehealth sessions for remote accessibility",
+  "Individual one-on-one therapy",
+  "Group counselling for shared support and learning",
+  "On-site company and school visits for workshops and counselling",
+];
+
+const differentiators = [
+  {
+    title: "Integrated Expertise",
+    description:
+      "Clinical science, public health, education, and counselling experience combined in one practice.",
+  },
+  {
+    title: "Family & Relationship Focus",
+    description:
+      "A clear specialization in marriage, family systems, parenting, and intergenerational distress.",
+  },
+  {
+    title: "Flexible Delivery",
+    description:
+      "In-person, online, school-based, and corporate options that reduce barriers to care.",
+  },
+  {
+    title: "Deep Community Roots",
+    description:
+      "Grounded in more than a decade of work with students, families, churches, and local communities.",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Ndainzwa kurasika uye kushungurudzika... Nestling Space yakandibatsira kupora uye kudzoka kuziva kukosha kwangu nekukwanisa kuyanana nevabereki vangu.",
+    author: "Peter",
+    label: "A happy student",
+  },
+  {
+    quote:
+      "Before coming to Nestling Space, I felt completely overwhelmed and alone. I was struggling with anxiety... For the first time in a long time, I feel heard, supported, and hopeful.",
+    author: "Tariro",
+    label: "Satisfied Client",
+  },
+  {
+    quote:
+      "Tisati tawanana, Takauya kuNestling Space tichifunga kuti takagadzirira kuroorana, asi takadzidza zvakawanda pamusoro pekutaurirana, kugadzirisa kusawirirana... Zvakatipa hwaro hwakasimba hwehupenyu.",
+    author: "T & K",
+    label: "Happy",
+  },
+  {
+    quote:
+      "We were at a point where communication had completely broken down... Nestling Space helped us understand each other again, rebuild trust, and learn healthy ways to communicate.",
+    author: "Bruno & Yusi",
+    label: "Happy Couple",
+  },
+  {
+    quote:
+      "After my breakup, I felt lost, rejected, and emotionally drained... Nestling Space gave me a safe place to heal and rebuild. Today, I am stronger, more self-aware, and at peace.",
+    author: "Munenyasha",
+    label: "Healed Client",
+  },
+];
+
 export default function Home() {
+  const web3FormsAccessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim() ?? "";
+  const hasWeb3FormsAccessKey = web3FormsAccessKey.length > 0;
+
   useEffect(() => {
-    initScripts();
+    return initScripts();
   }, []);
 
   return (
@@ -23,13 +195,13 @@ export default function Home() {
     <div className="loader-bloom">
       <span></span><span></span><span></span>
     </div>
-    <p className="loader-text">Nestling Space…</p>
+    <p className="loader-text">Nestling Space...</p>
   </div>
 
   {/*  ====== NAVIGATION ======  */}
   <nav id="navbar">
     <a href="#hero" className="nav-logo" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-      <img src="/Images/board.png" alt="Nestling Space Emblem" style={{ height: '48px', width: 'auto', objectFit: 'contain' }}/>
+      <Image src="/Images/logo.png" alt="Nestling Space Emblem" width={48} height={48} priority style={{ height: '48px', width: 'auto', objectFit: 'contain' }}/>
       <span style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--text-dark)' }}>Nestling <span style={{ color: 'var(--sage)' }}>Space</span></span>
     </a>
     <ul className="nav-links">
@@ -46,11 +218,11 @@ export default function Home() {
 
   {/*  ====== MOBILE MENU ======  */}
   <div className="mobile-menu" id="mobile-menu">
-    <a href="#about"    onClick={() => { /* closeMenu() */ }}>About</a>
-    <a href="#services" onClick={() => { /* closeMenu() */ }}>Services</a>
-    <a href="#founder"  onClick={() => { /* closeMenu() */ }}>Founder</a>
-    <a href="#affirmation" onClick={() => { /* closeMenu() */ }}>Affirmations</a>
-    <a href="#contact"  onClick={() => { /* closeMenu() */ }}>Contact</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#founder">Founder</a>
+    <a href="#affirmation">Affirmations</a>
+    <a href="#contact">Contact</a>
   </div>
 
   {/*  ==========================================
@@ -64,25 +236,25 @@ export default function Home() {
     <div className="hero-blob hero-blob-3" style={{ zIndex: '2' }}></div>
 
     {/*  botanical petals  */}
-    <span className="petal" style={{ top: '12%', left: '8%', animationDelay: '0s' }}>🌿</span>
-    <span className="petal" style={{ top: '75%', left: '6%', animationDelay: '1.5s' }}>✿</span>
-    <span className="petal" style={{ top: '20%', right: '9%', animationDelay: '0.8s' }}>🌸</span>
-    <span className="petal" style={{ top: '65%', right: '7%', animationDelay: '2.2s' }}>🍃</span>
-    <span className="petal" style={{ top: '40%', left: '3%', animationDelay: '3s' }}>🌾</span>
+    <span className="petal" style={{ top: '12%', left: '8%', animationDelay: '0s' }}>*</span>
+    <span className="petal" style={{ top: '75%', left: '6%', animationDelay: '1.5s' }}>*</span>
+    <span className="petal" style={{ top: '20%', right: '9%', animationDelay: '0.8s' }}>*</span>
+    <span className="petal" style={{ top: '65%', right: '7%', animationDelay: '2.2s' }}>*</span>
+    <span className="petal" style={{ top: '40%', left: '3%', animationDelay: '3s' }}>*</span>
 
     <div className="hero-content">
-      <span className="hero-eyebrow">🤍 Welcome to Nestling Space</span>
+      <span className="hero-eyebrow">Welcome to Nestling Space</span>
       <h1 className="hero-headline">
-        A safe space to <em>heal</em>…<br/>
+        A safe space to <em>heal</em>...<br/>
         A soft place to <em>grow</em>.
       </h1>
       <p className="hero-tagline">Your mind deserves care, compassion,<br/>and understanding.</p>
       <p className="hero-subtext">
-        Welcome to The Nestling Space, a gentle home for your healing and growth. Here, you are seen, heard, and supported as you untangle life's worries, build emotional strength, and move toward a life of clarity, peace, and purpose.
+        Welcome to The Nestling Space, a gentle home for your healing and growth. Here, you are seen, heard, and supported as you untangle life&apos;s worries, build emotional strength, and move toward a life of clarity, peace, and purpose.
       </p>
       <div className="hero-actions">
         <a href="#services" className="btn-primary">
-          Get Started &nbsp;✦
+          Get Started
         </a>
         <a href="#about" className="btn-secondary">
           Learn More
@@ -106,10 +278,10 @@ export default function Home() {
       {/*  Image  */}
       <div className="about-image-wrap reveal slide-left">
         <div className="about-image-frame">
-          <img src="/Images/A haven for healing.jpg.jpeg" alt="A haven for healing" />
+          <Image src="/Images/A haven for healing.jpg.jpeg" alt="A haven for healing" fill sizes="(max-width: 900px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
         </div>
         <div className="about-badge">
-          <div className="about-badge-icon">🕊️</div>
+          <div className="about-badge-icon">*</div>
           <div className="about-badge-text">
             <strong>Safe Space</strong>
             <span>Established with love</span>
@@ -122,57 +294,68 @@ export default function Home() {
         <div className="ornament">
           <h2 className="section-title" style={{ marginBottom: '0', fontSize: '2.5rem', color: 'var(--sage)' }}>Who We Are</h2>
           <div className="ornament-line"></div>
-          <span className="ornament-icon">✦</span>
+          <span className="ornament-icon">âœ¦</span>
         </div>
         <h3 className="section-title" style={{ fontSize: '1.8rem', marginBottom: '20px' }}>
-          Nurturing minds,<br/><em>one breath</em> at a time.
+          Rooted in science, service,<br/><em>and human dignity</em>.
         </h3>
         <p className="section-body">
-          The Nestling Space is a mental wellness home created for anyone ready to heal, grow, and break free from heavy patterns. We offer gentle, professional support through individual and family counselling, couples and marriage work, group programs, and corporate wellness services.
+          The Nestling Space was founded from a rare blend of clinical science, public health, teaching, and hands-on counselling experience. Over a decade of serving as a teacher and guidance and counselling practitioner revealed how closely emotional, relational, physical, and social well-being are connected.
         </p>
         <p className="section-body" style={{ marginTop: '18px' }}>
-          Rooted in compassion and faith-informed care, we walk with you as you build emotional resilience, heal from trauma, and learn practical tools for everyday life. Here, your story matters, your feelings are valid, and your healing journey is honored.
+          The practice was formalised after the COVID-19 pandemic made the psychological cost of fear, grief, isolation, and economic pressure impossible to ignore. That experience, together with years of working with students, parents, colleagues, and church communities, shaped a clear calling: provide culturally sensitive mental health support that helps break cycles of pain and restore resilience in individuals, couples, and families.
         </p>
 
-        <div style={{ marginTop: '24px', padding: '20px', background: 'var(--cream)', borderLeft: '4px solid var(--sage)', borderRadius: '8px' }}>
-          <h4 style={{ fontFamily: '\'Playfair Display\', serif', fontSize: '1.2rem', marginBottom: '8px' }}>Our Mission</h4>
-          <p className="section-body" style={{ fontSize: '0.9rem', marginBottom: '12px', lineHeight: '1.5' }}>To provide a serene, safe, and professional haven where individuals and families can heal, find purpose, and nurture their mental well-being.</p>
-          <h4 style={{ fontFamily: '\'Playfair Display\', serif', fontSize: '1.2rem', marginBottom: '8px' }}>Our Vision</h4>
-          <p className="section-body" style={{ fontSize: '0.9rem', lineHeight: '1.5' }}>To see healed communities where mental wellness is prioritized, generational trauma is broken, and individuals thrive in emotional freedom.</p>
+        <div className="about-statements">
+          <div className="statement-card">
+            <h4>Mission</h4>
+            <p>
+              To nurture mental well-being through comprehensive, culturally sensitive counselling for individuals, youth, the aged, couples, families, schools, and companies through face-to-face and online support.
+            </p>
+          </div>
+          <div className="statement-card">
+            <h4>Vision</h4>
+            <p>
+              To help build a Zimbabwe where mental health is a foundational pillar of well-being, with accessible and empowering support reaching families, institutions, and communities locally and globally.
+            </p>
+          </div>
+          <div className="statement-card">
+            <h4>Purpose</h4>
+            <p>
+              To strengthen individuals, families, and organisations with expert, compassionate, and practical therapeutic care that improves relationships, resilience, and long-term emotional wellness.
+            </p>
+          </div>
         </div>
 
         <div className="about-values reveal" style={{ transitionDelay: '0.2s' }}>
-          <div className="value-pill"><span className="dot"></span> Compassionate Care</div>
-          <div className="value-pill"><span className="dot"></span> Judgment-Free Zone</div>
-          <div className="value-pill"><span className="dot"></span> Evidence-Based Support</div>
-          <div className="value-pill"><span className="dot"></span> Holistic Wellness</div>
-          <div className="value-pill"><span className="dot"></span> Community & Connection</div>
-          <div className="value-pill"><span className="dot"></span> Personal Growth</div>
+          {coreValues.map((value) => (
+            <div className="value-pill" key={value}><span className="dot"></span> {value}</div>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
   {/*  ==========================================
-       STATS BAR
+       PRACTICE PILLARS
   ==========================================  */}
-  <div className="stats-bar reveal">
+  <div className="stats-bar reveal practice-pillars">
     <div className="stats-inner">
       <div className="stat-item">
-        <h3 className="counter" data-target="1200">0</h3>
-        <p>Minds Supported</p>
+        <h3>Evidence-Based</h3>
+        <p>Grounded in professional training, ethics, and practical therapeutic tools.</p>
       </div>
       <div className="stat-item">
-        <h3 className="counter" data-target="8">0</h3>
-        <p>Years of Practice</p>
+        <h3>Culturally Sensitive</h3>
+        <p>Respectful of Zimbabwean family systems, faith contexts, and lived realities.</p>
       </div>
       <div className="stat-item">
-        <h3 className="counter" data-target="97">0</h3>
-        <p>% Client Satisfaction</p>
+        <h3>Accessible Care</h3>
+        <p>Available face-to-face, online, and on-site for schools and organisations.</p>
       </div>
       <div className="stat-item">
-        <h3 className="counter" data-target="4">0</h3>
-        <p>Expert Disciplines</p>
+        <h3>Whole-Person Focus</h3>
+        <p>Attentive to psychological, relational, physical, social, and spiritual well-being.</p>
       </div>
     </div>
   </div>
@@ -183,42 +366,21 @@ export default function Home() {
   <section id="services">
     <div className="services-header reveal">
       <span className="section-eyebrow">What We Offer</span>
-      <h2 className="section-title">What You'll <em>Find Here</em></h2>
+      <h2 className="section-title">What You&apos;ll <em>Find Here</em></h2>
       <p className="section-body">
-        A gentle, curated collection of resources and support designed to meet you
-        exactly where you are.
+        Comprehensive counselling and training services designed for people, families,
+        schools, churches, and workplaces navigating real emotional and relational pressures.
       </p>
     </div>
 
     <div className="services-grid">
-      <div className="service-card reveal reveal-delay-1">
-        <img src="/Images/service_individual_1775480745394.png" style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '12px', marginBottom: '16px' }} alt="Individual Therapy"/>
-        <h3 className="card-title">Individual & Family Therapy</h3>
-        <p className="card-desc">
-          A safe, confidential space to explore stress, trauma, or grief. We also help families navigate conflict and heal together.
-        </p>
-      </div>
-      <div className="service-card reveal reveal-delay-2">
-        <img src="/Images/service_couples_1775480819650.png" style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '12px', marginBottom: '16px' }} alt="Couples Therapy"/>
-        <h3 className="card-title">Couples & Marriage Counselling</h3>
-        <p className="card-desc">
-          A neutral space for partners to rebuild trust, improve communication, and create healthier, fulfilling relationship patterns.
-        </p>
-      </div>
-      <div className="service-card reveal reveal-delay-3">
-        <img src="/Images/service_child_1775480856604.png" style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '12px', marginBottom: '16px' }} alt="Inner Child Healing"/>
-        <h3 className="card-title">Inner Child & Trauma Healing</h3>
-        <p className="card-desc">
-          Guided emotional processing to heal past wounds, restore stability, and reclaim a sense of peace and control.
-        </p>
-      </div>
-      <div className="service-card reveal reveal-delay-4">
-        <img src="/Images/service_group_1775480873131.png" style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '12px', marginBottom: '16px' }} alt="Group Sessions"/>
-        <h3 className="card-title">Group Sessions & Workshops</h3>
-        <p className="card-desc">
-          Supportive group settings to learn practical coping tools, build resilience, and reduce isolation alongside others.
-        </p>
-      </div>
+      {featuredServices.map((service, index) => (
+        <div className={`service-card reveal reveal-delay-${index + 1}`} key={service.title}>
+          <Image src={service.image} width={640} height={320} sizes="(max-width: 768px) 100vw, 25vw" style={{ width: '100%', height: '160px', objectFit: 'cover', borderRadius: '12px', marginBottom: '16px' }} alt={service.alt}/>
+          <h3 className="card-title">{service.title}</h3>
+          <p className="card-desc">{service.description}</p>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -226,68 +388,48 @@ export default function Home() {
   <section id="all-services" style={{ background: 'var(--cream)' }}>
     <div className="reveal">
       <h2 className="section-title">Our Full Range of <em>Services</em></h2>
+      <p className="section-body" style={{ maxWidth: '780px', margin: '0 auto' }}>
+        The practice serves clients across the life span and also partners with organisations that want structured mental health support.
+      </p>
       <div className="services-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '40px' }}>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">1. Individual Counseling</h3>
-            <p className="card-desc">A safe space where individuals can explore thoughts, emotions, and life challenges. Helps manage stress, anxiety, depression, trauma, grief.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">2. Inner Child Healing Therapy</h3>
-            <p className="card-desc">Helps individuals identify unresolved childhood wounds affecting their relationships today. Includes guided reflection and emotional processing.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">3. Couples & Marriage Counseling</h3>
-            <p className="card-desc">Helps couples improve communication, resolve conflicts, rebuild trust, and strengthen emotional connection.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">4. Family Counseling</h3>
-            <p className="card-desc">Helps families navigate conflicts, improve communication, and rebuild healthy relationships.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">5. Trauma & Emotional Healing</h3>
-            <p className="card-desc">Support for individuals who have experienced traumatic events, abuse, loss, or deep emotional wounds.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">6. Stress, Anxiety & Burnout</h3>
-            <p className="card-desc">Supports individuals experiencing overwhelming stress or emotional exhaustion to manage stress and regulate emotions.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">7. Women's Emotional Wellness</h3>
-            <p className="card-desc">A space for women navigating life transitions, motherhood, identity struggles to rediscover voice and emotional strength.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">8. Group Healing Sessions</h3>
-            <p className="card-desc">Facilitated small-group sessions where participants share experiences, gain support, and learn together.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">9. Temperament & Personality</h3>
-            <p className="card-desc">Helps individuals understand their natural temperament and emotional responses for healthier self-awareness.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">10. Faith-Based Counseling</h3>
-            <p className="card-desc">Optional service for those desiring spiritual guidance alongside counseling, integrating biblical principles.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">11. Personal Development Programs</h3>
-            <p className="card-desc">Workshops designed to help individuals grow emotionally and relationally, covering topics like emotional intelligence.</p>
-        </div>
-        
-        <div className="service-card" style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
-            <h3 className="card-title">12. Online Counseling</h3>
-            <p className="card-desc">Secure virtual counseling sessions for individuals who prefer remote support or live outside the local area.</p>
-        </div>
+        {fullServices.map((service, index) => (
+          <div className="service-card" key={service.title} style={{ padding: '30px', background: 'var(--white)', borderRadius: '16px', boxShadow: 'var(--shadow-soft)' }}>
+            <h3 className="card-title">{index + 1}. {service.title}</h3>
+            <p className="card-desc">{service.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
+  <section id="delivery" style={{ background: 'var(--white)' }}>
+    <div className="reveal">
+      <div className="ornament">
+        <span className="section-eyebrow" style={{ marginBottom: '0' }}>How We Work</span>
+        <div className="ornament-line"></div>
+        <span className="ornament-icon">+</span>
+      </div>
+      <h2 className="section-title">Flexible <em>Delivery Methods</em></h2>
+      <div className="info-grid">
+        <div className="info-card">
+          <h3>Service Delivery</h3>
+          <ul className="info-list">
+            {deliveryMethods.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="info-card">
+          <h3>What Makes The Nestling Space Distinct</h3>
+          <div className="usp-list">
+            {differentiators.map((item) => (
+              <div className="usp-item" key={item.title}>
+                <h4>{item.title}</h4>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -301,7 +443,7 @@ export default function Home() {
       <div className="founder-image-wrap reveal slide-left">
         <span className="founder-tag">Led with Purpose</span>
         <div className="founder-image-frame" style={{ background: 'var(--cream)' }}>
-          <img src="/Images/WhatsApp Image 2026-03-26 at 09.56.16.jpeg" alt="Dr M. Mugabe" style={{ objectFit: 'contain', objectPosition: 'top', width: '100%', height: '100%' }} />
+          <Image src="/Images/WhatsApp Image 2026-03-26 at 09.56.16.jpeg" alt="Dr M. Mugabe" fill sizes="(max-width: 900px) 100vw, 40vw" style={{ objectFit: 'contain', objectPosition: 'top' }} />
         </div>
       </div>
 
@@ -310,14 +452,14 @@ export default function Home() {
         <div className="ornament">
           <span className="section-eyebrow" style={{ marginBottom: '0' }}>Our Founder</span>
           <div className="ornament-line"></div>
-          <span className="ornament-icon">✦</span>
+          <span className="ornament-icon">âœ¦</span>
         </div>
         <h2 className="section-title">Led by <em>Dr. M. Mugabe</em></h2>
         <p className="section-body">
-          Nestling Space was founded by Dr. M. Mugabe, a Clinical Scientist, Public Health Practitioner, and passionate advocate for mental health. Her journey is rooted in a diverse background, including a decade of teaching and guidance counseling, which highlighted the inseparable link between physical, mental, and social well-being.
+          Dr. M. Mugabe is a Clinical Scientist, Public Health Practitioner, teacher, and counsellor whose work has consistently centred on people under pressure. Her experience in schools, churches, and public health settings shaped a practical understanding of how emotional pain travels through families and communities when it is left unaddressed.
         </p>
         <p className="section-body" style={{ marginTop: '16px' }}>
-          Witnessing the profound need for accessible mental health services, especially concerning family dynamics and intergenerational trauma, she created The Nestling Space. Her goal is to break cycles of pain, foster healing, and empower individuals and families to build a healthier, more resilient future.
+          The Nestling Space reflects that long view. It brings together therapeutic care, prevention, education, and community understanding to help clients move from survival toward healing, stronger relationships, and a more resilient future.
         </p>
 
         <div className="founder-credentials reveal reveal-delay-1">
@@ -327,21 +469,21 @@ export default function Home() {
           </div>
           <div className="credential-item">
             <i className="fa-solid fa-brain"></i>
-            Mental Health Therapist
+            Public Health Practitioner
           </div>
           <div className="credential-item">
             <i className="fa-solid fa-heart"></i>
-            Licensed Counsellor
+            Guidance & Counselling Educator
           </div>
           <div className="credential-item">
             <i className="fa-solid fa-seedling"></i>
-            Certified Life Coach
+            Family Mental Health Advocate
           </div>
         </div>
 
         <div className="founder-quote reveal reveal-delay-2">
-          Healing is not linear, and you are not behind. You are exactly where you need to be —
-          and this space was made for you.
+          Healing becomes possible when people are met with skill, compassion, and a space
+          where their story is taken seriously.
         </div>
       </div>
     </div>
@@ -354,22 +496,22 @@ export default function Home() {
     <div className="particles-container" id="particles-container"></div>
 
     <div className="affirmation-content reveal scale-up">
-      <span className="affirmation-overline">✨</span>
+      <span className="affirmation-overline">*</span>
       <h2 className="affirmation-headline">Your mind.<br/><em>Your health.</em><br/>Your worth.</h2>
 
       <div className="affirmation-divider">
         <div className="affirmation-divider-line"></div>
-        <span className="affirmation-divider-icon">🌸</span>
+        <span className="affirmation-divider-icon">*</span>
         <div className="affirmation-divider-line"></div>
       </div>
 
       <p className="affirmation-subtext">
-        💬 You are not alone.<br/>
+        You are not alone.<br/>
         You are welcome here.
       </p>
 
       <a href="#contact" className="btn-primary" style={{ display: 'inline-flex' }}>
-        Take the First Step &nbsp;🤍
+        Take the First Step
       </a>
     </div>
   </section>
@@ -382,7 +524,7 @@ export default function Home() {
       <p className="section-body" style={{ marginBottom: '40px' }}>Have a question about our services? Feel free to reach out to us directly via WhatsApp or Email.</p>
       
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-          <a href="https://wa.me/263773214886" target="_blank" className="btn-primary" style={{ background: '#25D366', textDecoration: 'none' }}>
+          <a href="https://wa.me/263773214886" target="_blank" rel="noreferrer" className="btn-primary" style={{ background: '#25D366', textDecoration: 'none' }}>
              Message on WhatsApp (+263 77 321 4886)
           </a>
           <a href="mailto:nestlingsafespace@gmail.com" className="btn-secondary" style={{ textDecoration: 'none' }}>
@@ -391,12 +533,10 @@ export default function Home() {
       </div>
 
       <div className="contact-form" style={{ maxWidth: '600px', marginTop: '60px' }}>
-        <h3 style={{ fontFamily: '\'Playfair Display\', serif', marginBottom: '20px' }}>Or send an inquiry form:</h3>
-        <form action="https://api.web3forms.com/submit" method="POST">
-          {/*  TODO: Add your Web3Forms Access Key below  */}
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE"/>
+        <h3 style={{ fontFamily: 'var(--font-display), serif', marginBottom: '20px' }}>Or send an inquiry form:</h3>
+        <form action={hasWeb3FormsAccessKey ? "https://api.web3forms.com/submit" : undefined} method={hasWeb3FormsAccessKey ? "POST" : undefined}>
+          {hasWeb3FormsAccessKey ? <input type="hidden" name="access_key" value={web3FormsAccessKey}/> : null}
           <input type="hidden" name="subject" value="New Service Inquiry from Nestling Space"/>
-          {/*  End Web3Forms Setup  */}
           <div className="form-group">
             <label>Name</label>
             <input type="text" name="name" required />
@@ -409,7 +549,12 @@ export default function Home() {
             <label>Message</label>
             <textarea name="message" rows={5} required></textarea>
           </div>
-          <button type="submit" className="btn-submit">Send Inquiry</button>
+          {!hasWeb3FormsAccessKey ? (
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-soft)', marginBottom: '20px' }}>
+              Online form setup is in progress. Please use WhatsApp or email for now.
+            </p>
+          ) : null}
+          <button type="submit" className="btn-submit" disabled={!hasWeb3FormsAccessKey}>Send Inquiry</button>
         </form>
       </div>
     </div>
@@ -422,11 +567,9 @@ export default function Home() {
       <p className="section-body">Take the first step towards your healing journey. Fill out the form below to request a session.</p>
       
       <div className="contact-form" style={{ maxWidth: '600px', marginTop: '40px' }}>
-        <form action="https://api.web3forms.com/submit" method="POST">
-          {/*  TODO: Add your Web3Forms Access Key below  */}
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE"/>
+        <form action={hasWeb3FormsAccessKey ? "https://api.web3forms.com/submit" : undefined} method={hasWeb3FormsAccessKey ? "POST" : undefined}>
+          {hasWeb3FormsAccessKey ? <input type="hidden" name="access_key" value={web3FormsAccessKey}/> : null}
           <input type="hidden" name="subject" value="New Booking Request from Nestling Space"/>
-          {/*  End Web3Forms Setup  */}
           <div className="form-group">
             <label>Name</label>
             <input type="text" name="name" required />
@@ -448,7 +591,7 @@ export default function Home() {
             <textarea name="notes" rows={4}></textarea>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-soft)', marginBottom: '20px' }}>By booking, you consent to our Privacy Policy and Terms & Conditions.</p>
-          <button type="submit" className="btn-submit">Request Booking 🤍</button>
+          <button type="submit" className="btn-submit" disabled={!hasWeb3FormsAccessKey}>Request Booking</button>
         </form>
       </div>
     </div>
@@ -461,11 +604,9 @@ export default function Home() {
       <p className="section-body">We value your experience and continually seek to improve. Please let us know how we did.</p>
       
       <div className="contact-form" style={{ maxWidth: '600px', marginTop: '40px' }}>
-        <form action="https://api.web3forms.com/submit" method="POST">
-          {/*  TODO: Add your Web3Forms Access Key below  */}
-          <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE"/>
+        <form action={hasWeb3FormsAccessKey ? "https://api.web3forms.com/submit" : undefined} method={hasWeb3FormsAccessKey ? "POST" : undefined}>
+          {hasWeb3FormsAccessKey ? <input type="hidden" name="access_key" value={web3FormsAccessKey}/> : null}
           <input type="hidden" name="subject" value="New Feedback Submission from Nestling Space"/>
-          {/*  End Web3Forms Setup  */}
           <div className="form-group">
             <label>Name (Optional)</label>
             <input type="text" name="name" />
@@ -485,7 +626,12 @@ export default function Home() {
                 <option value="No">No, keep private</option>
             </select>
           </div>
-          <button type="submit" className="btn-submit" style={{ marginTop: '20px' }}>Submit Feedback</button>
+          {!hasWeb3FormsAccessKey ? (
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-soft)', marginTop: '20px', marginBottom: '0' }}>
+              Online feedback submission is in progress. Please send feedback directly by email for now.
+            </p>
+          ) : null}
+          <button type="submit" className="btn-submit" style={{ marginTop: '20px' }} disabled={!hasWeb3FormsAccessKey}>Submit Feedback</button>
         </form>
       </div>
     </div>
@@ -496,12 +642,12 @@ export default function Home() {
   ==========================================  */}
   <section id="gallery" style={{ background: 'var(--cream)' }}>
     <div className="reveal">
-      <div className="ornament"><span className="section-eyebrow" style={{ marginBottom: '0' }}>Our Space</span><div className="ornament-line"></div><span className="ornament-icon">✦</span></div>
+      <div className="ornament"><span className="section-eyebrow" style={{ marginBottom: '0' }}>Our Space</span><div className="ornament-line"></div><span className="ornament-icon">*</span></div>
       <h2 className="section-title">A glimpse of <em>Healing</em></h2>
       <div className="gallery-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '40px' }}>
-        <img src="/Images/hero_family_bright_1775480710232.png" alt="Nestling Space" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
-        <img src="/Images/service_group_1775480873131.png" alt="Nestling Space" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
-        <img src="/Images/service_individual_1775480745394.png" alt="Nestling Space" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
+        <Image src="/Images/hero_family_bright_1775480710232.png" alt="Nestling Space" width={700} height={560} sizes="(max-width: 768px) 100vw, 33vw" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
+        <Image src="/Images/service_group_1775480873131.png" alt="Nestling Space" width={700} height={560} sizes="(max-width: 768px) 100vw, 33vw" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
+        <Image src="/Images/service_individual_1775480745394.png" alt="Nestling Space" width={700} height={560} sizes="(max-width: 768px) 100vw, 33vw" style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: '12px' }} />
       </div>
     </div>
   </section>
@@ -511,35 +657,15 @@ export default function Home() {
   ==========================================  */}
   <section id="testimonials" style={{ background: 'var(--white)' }}>
     <div className="reveal">
-      <div className="ornament"><span className="section-eyebrow" style={{ marginBottom: '0' }}>Stories of Healing</span><div className="ornament-line"></div><span className="ornament-icon">✦</span></div>
+      <div className="ornament"><span className="section-eyebrow" style={{ marginBottom: '0' }}>Stories of Healing</span><div className="ornament-line"></div><span className="ornament-icon">*</span></div>
       <h2 className="section-title">What Our Clients <em>Say</em></h2>
       <div className="testimonials-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginTop: '40px' }}>
-        
-        <div className="testimonial-card" style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>"Ndainzwa kurasika uye kushungurudzika... Nestling Space yakandibatsira kupora uye kudzoka kuziva kukosha kwangu nekukwanisa kuyanana nevabereki vangu."</p>
-          <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>Peter</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>A happy student</span>
-        </div>
-
-        <div className="testimonial-card" style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>"Before coming to Nestling Space, I felt completely overwhelmed and alone. I was struggling with anxiety... For the first time in a long time, I feel heard, supported, and hopeful."</p>
-          <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>Tariro</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>Satisfied Client</span>
-        </div>
-
-        <div className="testimonial-card" style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>"Tisati tawanana, Takauya kuNestling Space tichifunga kuti takagadzirira kuroorana, asi takadzidza zvakawanda pamusoro pekutaurirana, kugadzirisa kusawirirana... Zvakatipa hwaro hwakasimba hwehupenyu."</p>
-          <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>T & K</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>Happy</span>
-        </div>
-
-        <div className="testimonial-card" style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>"We were at a point where communication had completely broken down... Nestling Space helped us understand each other again, rebuild trust, and learn healthy ways to communicate."</p>
-          <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>Bruno & Yusi</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>Happy Couple</span>
-        </div>
-
-        <div className="testimonial-card" style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
-          <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>"After my breakup, I felt lost, rejected, and emotionally drained... Nestling Space gave me a safe place to heal and rebuild. Today, I am stronger, more self-aware, and at peace."</p>
-          <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>Munenyasha</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>Healed Client</span>
-        </div>
-
+        {testimonials.map((testimonial) => (
+          <div className="testimonial-card" key={`${testimonial.author}-${testimonial.label}`} style={{ padding: '30px', background: 'var(--cream)', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}>
+            <p style={{ fontStyle: 'italic', color: 'var(--text-mid)', lineHeight: '1.6' }}>&ldquo;{testimonial.quote}&rdquo;</p>
+            <h4 style={{ marginTop: '20px', color: 'var(--text-dark)' }}>{testimonial.author}</h4><span style={{ fontSize: '0.8rem', color: 'var(--text-soft)' }}>{testimonial.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -555,28 +681,28 @@ export default function Home() {
         <h2 className="section-title">Ready to <em>begin</em>?</h2>
         <p className="section-body" style={{ marginBottom: '48px' }}>
           Reaching out is an act of courage. Whether you have a question, want to learn more,
-          or are ready to take the first step — we're here for you.
+          or are ready to take the first step, we&apos;re here for you.
         </p>
 
         <div className="contact-info-item">
           <div className="contact-icon"><i className="fa-brands fa-instagram"></i></div>
           <div>
             <h4>Instagram</h4>
-            <p><a href="https://www.instagram.com/nestlingspace" target="_blank" style={{ textDecoration: 'underline' }}>@nestlingspace</a><br/>Follow our journey</p>
+            <p><a href="https://www.instagram.com/nestlingspace" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>@nestlingspace</a><br/>Follow our journey</p>
           </div>
         </div>
         <div className="contact-info-item">
           <div className="contact-icon"><i className="fa-brands fa-whatsapp"></i></div>
           <div>
             <h4>WhatsApp</h4>
-            <p><a href="https://wa.me/263773214886" target="_blank" style={{ textDecoration: 'underline' }}>Message us directly</a><br/>(Private & Secure)</p>
+            <p><a href="https://wa.me/263773214886" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>Message us directly</a><br/>(Private & Secure)</p>
           </div>
         </div>
         <div className="contact-info-item">
           <div className="contact-icon"><i className="fa-solid fa-facebook"></i></div>
           <div>
             <h4>Facebook</h4>
-            <p><a href="https://www.facebook.com/profile.php?id=61580743690158" target="_blank" style={{ textDecoration: 'underline' }}>The Nestling Space</a><br/>Connect with us</p>
+            <p><a href="https://www.facebook.com/profile.php?id=61580743690158" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>The Nestling Space</a><br/>Connect with us</p>
           </div>
         </div>
         <div className="contact-info-item">
@@ -591,7 +717,7 @@ export default function Home() {
       {/*  Form  */}
       <div className="reveal slide-right">
         <div className="contact-form">
-          <form id="contact-form" noValidate>
+          <form id="contact-form" noValidate data-access-key={web3FormsAccessKey}>
             <div className="form-group" id="group-name">
               <label htmlFor="name">Your Name</label>
               <input type="text" id="name" name="name" placeholder="e.g. Sarah M." autoComplete="off"/>
@@ -604,15 +730,15 @@ export default function Home() {
             </div>
             <div className="form-group" id="group-message">
               <label htmlFor="message">Your Message</label>
-              <textarea id="message" name="message" rows={5} placeholder="Share what's on your mind…"></textarea>
+              <textarea id="message" name="message" rows={5} placeholder="Share what&apos;s on your mind..."></textarea>
               <span className="error-msg">Please write a message.</span>
             </div>
             <button type="submit" className="btn-submit" id="submit-btn">
-              Reach Out 🤍
+              Reach Out
             </button>
           </form>
           <div className="form-success" id="form-success">
-            <div className="success-icon">🌿</div>
+            <div className="success-icon">✿</div>
             <h3>Message Received</h3>
             <p>Thank you for reaching out. Dr. Mugabe will be in touch with warmth and care.</p>
           </div>
@@ -666,7 +792,6 @@ export default function Home() {
 
         <h3 style={{ marginTop: '30px', fontFamily: '\'Playfair Display\', serif', color: 'var(--text-dark)' }}>1. Session Payments</h3>
         <p>All counseling sessions must be paid for in advance to secure your booking. Payments confirm your appointment time and therapist availability.</p>
-
         <h3 style={{ marginTop: '30px', fontFamily: '\'Playfair Display\', serif', color: 'var(--text-dark)' }}>2. Cancellation & Rescheduling</h3>
         <p>Cancellations or rescheduling requests must be made at least 24 hours before your scheduled session. If you cancel within this timeframe, you may reschedule your session at no additional cost, or request a full refund.</p>
 
@@ -674,7 +799,7 @@ export default function Home() {
         <p>Cancellations made less than 24 hours before the session are non-refundable. If you do not attend your session without prior notice, the session is considered a no-show and is non-refundable and cannot be rescheduled.</p>
 
         <h3 style={{ marginTop: '30px', fontFamily: '\'Playfair Display\', serif', color: 'var(--text-dark)' }}>4. Refund Processing</h3>
-        <p>Approved refunds will be processed within 5–10 business days. Refunds will be issued using the original payment method where possible. Please note that any applicable transaction or processing fees may be deducted.</p>
+        <p>Approved refunds will be processed within 5-10 business days. Refunds will be issued using the original payment method where possible. Please note that any applicable transaction or processing fees may be deducted.</p>
 
         <p style={{ marginTop: '30px', fontStyle: 'italic' }}>Our goal is to create a safe and respectful space for both clients and practitioners. This policy helps us honor your time while also respecting the commitment required to provide quality care.</p>
       </div>
@@ -714,14 +839,13 @@ export default function Home() {
         <div className="brand-name">Nestling <span>Space</span></div>
         <p>A safe sanctuary for your mind, heart, and healing journey. You are always welcome here.</p>
         <div className="footer-social">
-          <a href="#" className="social-btn" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-          <a href="#" className="social-btn" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
-          <a href="#" className="social-btn" aria-label="Email"><i className="fa-solid fa-envelope"></i></a>
-          <a href="#" className="social-btn" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/nestlingspace" target="_blank" rel="noreferrer" className="social-btn" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/263773214886" target="_blank" rel="noreferrer" className="social-btn" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
+          <a href="mailto:nestlingsafespace@gmail.com" className="social-btn" aria-label="Email"><i className="fa-solid fa-envelope"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61580743690158" target="_blank" rel="noreferrer" className="social-btn" aria-label="Facebook"><i className="fa-brands fa-facebook-f"></i></a>
         </div>
       </div>
 
-      
       <div className="footer-col" style={{ marginRight: '20px' }}>
         <h4>Navigate</h4>
         <ul>
@@ -742,9 +866,6 @@ export default function Home() {
           <li><a href="#terms">Terms & Conditions</a></li>
         </ul>
       </div>
-
-
-      
     </div>
 
     <div className="footer-bottom">
@@ -757,3 +878,4 @@ export default function Home() {
     </>
   );
 }
+

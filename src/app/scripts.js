@@ -1,247 +1,278 @@
 export default function initScripts() {
-  /* =========================================
-     LOADER
-  ========================================= */
-  setTimeout(() => {
-    const loader = document.getElementById('loader');
-    if (loader) loader.classList.add('hidden');
+  const cleanups = [];
+
+  const addListener = (target, event, handler, options) => {
+    target.addEventListener(event, handler, options);
+    cleanups.push(() => target.removeEventListener(event, handler, options));
+  };
+
+  const loader = document.getElementById("loader");
+  const loaderTimeout = window.setTimeout(() => {
+    loader?.classList.add("hidden");
   }, 1600);
+  cleanups.push(() => window.clearTimeout(loaderTimeout));
 
-  /* =========================================
-     CUSTOM CURSOR
-  ========================================= */
-  const dot  = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
-  if (dot && ring) {
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px';
-      dot.style.top  = my + 'px';
-    });
+  const dot = document.getElementById("cursor-dot");
+  const ring = document.getElementById("cursor-ring");
+  let mx = 0;
+  let my = 0;
+  let rx = 0;
+  let ry = 0;
+  let ringFrame = 0;
 
-    (function animRing() {
+  if (dot && ring && !coarsePointer) {
+    const handleMouseMove = (event) => {
+      mx = event.clientX;
+      my = event.clientY;
+      dot.style.left = `${mx}px`;
+      dot.style.top = `${my}px`;
+    };
+
+    const animateRing = () => {
       rx += (mx - rx) * 0.14;
       ry += (my - ry) * 0.14;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(animRing);
-    })();
+      ring.style.left = `${rx}px`;
+      ring.style.top = `${ry}px`;
+      ringFrame = window.requestAnimationFrame(animateRing);
+    };
 
-    document.querySelectorAll('a, button, input, textarea').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.transform = 'translate(-50%,-50%) scale(1.6)';
-        ring.style.opacity   = '0.3';
-      });
-      el.addEventListener('mouseleave', () => {
-        ring.style.transform = 'translate(-50%,-50%) scale(1)';
-        ring.style.opacity   = '0.6';
-      });
+    addListener(document, "mousemove", handleMouseMove);
+    animateRing();
+    cleanups.push(() => window.cancelAnimationFrame(ringFrame));
+
+    document.querySelectorAll("a, button, input, textarea, select").forEach((element) => {
+      const handleEnter = () => {
+        ring.style.transform = "translate(-50%,-50%) scale(1.6)";
+        ring.style.opacity = "0.3";
+      };
+      const handleLeave = () => {
+        ring.style.transform = "translate(-50%,-50%) scale(1)";
+        ring.style.opacity = "0.6";
+      };
+
+      addListener(element, "mouseenter", handleEnter);
+      addListener(element, "mouseleave", handleLeave);
     });
   }
 
-  /* =========================================
-     NAVBAR SCROLL EFFECT
-  ========================================= */
-  const navbar = document.getElementById('navbar');
+  const navbar = document.getElementById("navbar");
   if (navbar) {
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    });
+    const handleScroll = () => {
+      navbar.classList.toggle("scrolled", window.scrollY > 60);
+    };
+
+    handleScroll();
+    addListener(window, "scroll", handleScroll, { passive: true });
   }
 
-  /* =========================================
-     SCROLL PROGRESS BAR
-  ========================================= */
-  const bar = document.getElementById('scroll-progress');
-  if (bar) {
-    window.addEventListener('scroll', () => {
-      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      bar.style.width = pct + '%';
-    });
+  const progressBar = document.getElementById("scroll-progress");
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollableHeight = document.body.scrollHeight - window.innerHeight;
+      const percent = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+      progressBar.style.width = `${percent}%`;
+    };
+
+    updateProgress();
+    addListener(window, "scroll", updateProgress, { passive: true });
+    addListener(window, "resize", updateProgress);
   }
 
-  /* =========================================
-     MOBILE MENU
-  ========================================= */
-  const hamburger  = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileMenu.classList.toggle('open');
-    });
+    const closeMenu = () => {
+      hamburger.classList.remove("open");
+      mobileMenu.classList.remove("open");
+    };
 
-    window.closeMenu = function() {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-    }
+    const toggleMenu = () => {
+      hamburger.classList.toggle("open");
+      mobileMenu.classList.toggle("open");
+    };
+
+    addListener(hamburger, "click", toggleMenu);
+    mobileMenu.querySelectorAll("a").forEach((link) => addListener(link, "click", closeMenu));
   }
 
-  /* =========================================
-     SCROLL-TRIGGERED REVEAL
-  ========================================= */
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  const reveals = document.querySelectorAll(".reveal");
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
+  reveals.forEach((element) => revealObserver.observe(element));
+  cleanups.push(() => revealObserver.disconnect());
 
-  reveals.forEach(el => io.observe(el));
-
-  /* =========================================
-     ANIMATED COUNTERS
-  ========================================= */
-  const counters = document.querySelectorAll('.counter');
-  const counterIO = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el     = entry.target;
-        const target = parseInt(el.dataset.target, 10);
-        const suffix = target > 100 ? '+' : target === 97 ? '%' : '';
-        let current  = 0;
-        const step   = target / 60;
-
-        const tick = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            el.textContent = target + suffix;
-            clearInterval(tick);
-          } else {
-            el.textContent = Math.floor(current) + suffix;
-          }
-        }, 25);
-
-        counterIO.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach(c => counterIO.observe(c));
-
-  /* =========================================
-     FLOATING PARTICLES (Affirmation)
-  ========================================= */
-  const particleContainer = document.getElementById('particles-container');
+  const particleContainer = document.getElementById("particles-container");
   if (particleContainer) {
-    const particleEmojis = ['✿', '🌸', '🍃', '🌿', '✦', '⭑', '◦'];
-    const particleColors  = ['rgba(139,175,142,0.5)', 'rgba(232,197,188,0.5)', 'rgba(214,196,170,0.5)'];
+    particleContainer.replaceChildren();
+    const particleGlyphs = ["*", "+", ".", "o"];
+    const particleColors = [
+      "rgba(139,175,142,0.5)",
+      "rgba(232,197,188,0.5)",
+      "rgba(214,196,170,0.5)",
+    ];
 
-    for (let i = 0; i < 18; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      const size    = Math.random() * 10 + 6;
-      const left    = Math.random() * 100;
-      const delay   = Math.random() * 10;
-      const dur     = Math.random() * 8 + 8;
-      const useEmoji = Math.random() > 0.5;
+    for (let index = 0; index < 18; index += 1) {
+      const particle = document.createElement("div");
+      particle.className = "particle";
+      const size = Math.random() * 10 + 6;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 10;
+      const duration = Math.random() * 8 + 8;
+      const useGlyph = Math.random() > 0.5;
 
-      p.style.cssText = `
+      particle.style.cssText = `
         left: ${left}%;
         width: ${size}px;
         height: ${size}px;
-        background: ${useEmoji ? 'transparent' : particleColors[Math.floor(Math.random()*particleColors.length)]};
-        font-size: ${useEmoji ? size * 1.8 + 'px' : '0'};
-        animation-duration: ${dur}s;
+        background: ${useGlyph ? "transparent" : particleColors[Math.floor(Math.random() * particleColors.length)]};
+        font-size: ${useGlyph ? `${size * 1.8}px` : "0"};
+        animation-duration: ${duration}s;
         animation-delay: ${delay}s;
       `;
-      if (useEmoji) {
-        p.textContent = particleEmojis[Math.floor(Math.random()*particleEmojis.length)];
-        p.style.background = 'none';
-        p.style.width = 'auto';
-        p.style.height = 'auto';
+
+      if (useGlyph) {
+        particle.textContent = particleGlyphs[Math.floor(Math.random() * particleGlyphs.length)];
+        particle.style.background = "none";
+        particle.style.width = "auto";
+        particle.style.height = "auto";
       }
-      particleContainer.appendChild(p);
+
+      particleContainer.appendChild(particle);
     }
   }
 
-  /* =========================================
-     LIGHT PARALLAX (Hero blobs)
-  ========================================= */
-  document.addEventListener('mousemove', e => {
-    const bx = e.clientX / window.innerWidth  - 0.5;
-    const by = e.clientY / window.innerHeight - 0.5;
-    document.querySelectorAll('.hero-blob').forEach((b, i) => {
-      const factor = (i + 1) * 14;
-      b.style.transform = `translate(${bx * factor}px, ${by * factor}px)`;
-    });
-  });
+  if (!reduceMotion) {
+    const handleParallax = (event) => {
+      const offsetX = event.clientX / window.innerWidth - 0.5;
+      const offsetY = event.clientY / window.innerHeight - 0.5;
 
-  /* =========================================
-     FORM VALIDATION + RIPPLE
-  ========================================= */
-  const form      = document.getElementById('contact-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const success   = document.getElementById('form-success');
+      document.querySelectorAll(".hero-blob").forEach((blob, index) => {
+        const factor = (index + 1) * 14;
+        blob.style.transform = `translate(${offsetX * factor}px, ${offsetY * factor}px)`;
+      });
+    };
 
-  function validate(id, groupId, test) {
-    const el    = document.getElementById(id);
-    const group = document.getElementById(groupId);
-    if (!el || !group) return false;
-    const ok    = test(el.value.trim());
-    group.classList.toggle('invalid', !ok);
-    el.classList.toggle('error', !ok);
-    return ok;
+    addListener(document, "mousemove", handleParallax);
   }
 
-  if (form && submitBtn && success) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const v1 = validate('name',    'group-name',    v => v.length >= 2);
-      const v2 = validate('email',   'group-email',   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-      const v3 = validate('message', 'group-message', v => v.length >= 10);
+  const form = document.getElementById("contact-form");
+  const submitButton = document.getElementById("submit-btn");
+  const successMessage = document.getElementById("form-success");
 
-      if (v1 && v2 && v3) {
-        submitBtn.textContent = 'Sending…';
-        submitBtn.disabled = true;
-        
+  const validate = (id, groupId, test) => {
+    const field = document.getElementById(id);
+    const group = document.getElementById(groupId);
+    if (!field || !group) {
+      return false;
+    }
+
+    const value = "value" in field ? field.value.trim() : "";
+    const isValid = test(value);
+    group.classList.toggle("invalid", !isValid);
+    field.classList.toggle("error", !isValid);
+    return isValid;
+  };
+
+  if (form && submitButton && successMessage) {
+    const accessKey = form.dataset.accessKey?.trim() ?? "";
+
+    if (!accessKey) {
+      submitButton.textContent = "Email or WhatsApp";
+      submitButton.setAttribute("disabled", "true");
+    }
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      const validName = validate("name", "group-name", (value) => value.length >= 2);
+      const validEmail = validate("email", "group-email", (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value));
+      const validMessage = validate("message", "group-message", (value) => value.length >= 10);
+
+      if (!validName || !validEmail || !validMessage) {
+        return;
+      }
+
+      if (!accessKey) {
+        submitButton.textContent = "Email or WhatsApp";
+        return;
+      }
+
+      submitButton.textContent = "Sending...";
+      submitButton.setAttribute("disabled", "true");
+
+      try {
         const formData = new FormData(form);
-        formData.append("access_key", "YOUR_ACCESS_KEY_HERE");
+        formData.append("access_key", accessKey);
         formData.append("subject", "New Message from Nestling Space");
 
-        fetch("https://api.web3forms.com/submit", {
+        const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          body: formData
-        }).then(response => {
-          form.style.display = 'none';
-          success.style.display = 'block';
-        }).catch(error => {
-          submitBtn.textContent = 'Error. Please email directly.';
+          body: formData,
         });
-      }
-    });
 
-    // Ripple on submit button
-    submitBtn.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const r = document.createElement('span');
-      r.className = 'ripple';
-      const size = Math.max(this.clientWidth, this.clientHeight);
-      r.style.cssText = `
-        width: ${size}px; height: ${size}px;
-        left: ${e.clientX - rect.left - size/2}px;
-        top:  ${e.clientY - rect.top  - size/2}px;
+        if (!response.ok) {
+          throw new Error("Form submission failed");
+        }
+
+        form.style.display = "none";
+        successMessage.style.display = "block";
+      } catch {
+        submitButton.textContent = "Error. Please email directly.";
+        submitButton.removeAttribute("disabled");
+      }
+    };
+
+    addListener(form, "submit", handleSubmit);
+
+    const handleRipple = (event) => {
+      const rect = submitButton.getBoundingClientRect();
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      const size = Math.max(submitButton.clientWidth, submitButton.clientHeight);
+      ripple.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${event.clientX - rect.left - size / 2}px;
+        top: ${event.clientY - rect.top - size / 2}px;
       `;
-      this.appendChild(r);
-      setTimeout(() => r.remove(), 700);
-    });
+      submitButton.appendChild(ripple);
+      window.setTimeout(() => ripple.remove(), 700);
+    };
+
+    addListener(submitButton, "click", handleRipple);
   }
 
-  /* =========================================
-     SMOOTH SCROLL FOR ALL ANCHORS
-  ========================================= */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const targetElement = document.querySelector(a.getAttribute('href'));
-      if (targetElement) {
-        e.preventDefault();
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    const handleAnchorClick = (event) => {
+      const targetId = anchor.getAttribute("href");
+      if (!targetId) {
+        return;
       }
-    });
+
+      const targetElement = document.querySelector(targetId);
+      if (!targetElement) {
+        return;
+      }
+
+      event.preventDefault();
+      targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    addListener(anchor, "click", handleAnchorClick);
   });
+
+  return () => {
+    cleanups.forEach((cleanup) => cleanup());
+  };
 }
