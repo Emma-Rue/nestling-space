@@ -3,26 +3,27 @@
 ============================================= */
 :root {
   /* Surfaces */
-  --white:          #ffffff;
-  --parchment:      #f5f5f7;
-  --dark-1:         #1d1d1f;
-  --dark-2:         #272729;
-  --dark-3:         #2a2a2c;
+  --white:          #fdf0ee;
+  --parchment:      #dce7da;
+  --peach:          #fad4c5;
+  --dark-1:         #647968;
+  --dark-2:         #5a6d5f;
+  --dark-3:         #4f6156;
 
   /* Text */
-  --ink:            #1d1d1f;
-  --ink-secondary:  #424245;
-  --ink-tertiary:   #6e6e73;
-  --ink-soft:       #86868b;
+  --ink:            #4f6156;
+  --ink-secondary:  #647968;
+  --ink-tertiary:   #7a887f;
+  --ink-soft:       #8f9a92;
 
   /* Brand */
-  --sage:           #587A54;
-  --sage-dark:      #3d5839;
-  --sage-light:     #8BAD86;
+  --sage:           #a1ba9b;
+  --sage-dark:      #647968;
+  --sage-light:     #dce7da;
 
   /* Dividers */
-  --divider:        #d2d2d7;
-  --divider-dark:   rgba(255,255,255,0.12);
+  --divider:        #ead8cf;
+  --divider-dark:   rgba(100,121,104,0.22);
 
   /* Typography */
   --font-system: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -48,7 +49,7 @@ html {
 
 body {
   font-family: var(--font-system);
-  background: var(--white);
+  background: linear-gradient(180deg, #fdf0ee 0%, #f6ebe6 100%);
   color: var(--ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -71,7 +72,7 @@ nav#navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(29,29,31,0.8);
+  background: rgba(100,121,104,0.88);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }
@@ -80,7 +81,7 @@ nav#navbar {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #f5f5f7;
+  color: #fdf0ee;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.2px;
@@ -96,18 +97,18 @@ nav#navbar {
 .nav-links a {
   font-size: 12px;
   font-weight: 400;
-  color: rgba(255,255,255,0.8);
+  color: rgba(253,240,238,0.82);
   letter-spacing: 0;
   transition: color 0.2s;
 }
 .nav-links a:hover,
 .nav-links a.active {
-  color: #ffffff;
+  color: #fff7f4;
 }
 
 .nav-cta {
   background: var(--sage) !important;
-  color: #ffffff !important;
+  color: var(--dark-3) !important;
   border-radius: 9999px;
   padding: 6px 14px !important;
   font-size: 12px !important;
@@ -128,7 +129,7 @@ nav#navbar {
 }
 .hamburger span {
   width: 20px; height: 1px;
-  background: rgba(255,255,255,0.8);
+  background: rgba(253,240,238,0.85);
   display: block;
   transition: transform 0.25s, opacity 0.25s;
 }
@@ -141,7 +142,7 @@ nav#navbar {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(29,29,31,0.96);
+  background: rgba(100,121,104,0.96);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 999;
@@ -159,7 +160,7 @@ nav#navbar {
 .mobile-menu a {
   font-size: 28px;
   font-weight: 600;
-  color: rgba(255,255,255,0.9);
+  color: rgba(253,240,238,0.92);
   letter-spacing: -0.4px;
   transition: color 0.2s;
 }
@@ -178,7 +179,7 @@ nav#navbar {
 #loader {
   position: fixed;
   inset: 0;
-  background: var(--dark-1);
+  background: linear-gradient(180deg, var(--dark-1), var(--dark-3));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,7 +207,7 @@ nav#navbar {
 .loader-bloom span:nth-child(2) {
   width: 36px; height: 36px;
   top: 6px; left: 6px;
-  border-top-color: rgba(255,255,255,0.3);
+  border-top-color: rgba(253,240,238,0.35);
   animation-duration: 0.75s;
   animation-direction: reverse;
 }
@@ -217,7 +218,7 @@ nav#navbar {
 .loader-text {
   font-size: 14px;
   font-weight: 400;
-  color: rgba(255,255,255,0.4);
+  color: rgba(253,240,238,0.52);
   letter-spacing: 0.04em;
 }
 
@@ -286,7 +287,7 @@ nav#navbar {
 .tile-white    { background: var(--white); }
 .tile-parchment { background: var(--parchment); }
 .tile-dark     { background: var(--dark-1); }
-.tile-dark-2   { background: var(--dark-2); }
+.tile-dark-2   { background: linear-gradient(180deg, var(--dark-2), var(--dark-3)); }
 
 .tile-inner {
   max-width: 980px;
@@ -304,7 +305,7 @@ nav#navbar {
 .section-header.centered { text-align: center; }
 
 .section-eyebrow {
-  color: var(--sage);
+  color: var(--dark-1);
   margin-bottom: 14px;
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -312,23 +313,23 @@ nav#navbar {
 
 /* Dark surface text overrides */
 .tile-dark .section-eyebrow,
-.tile-dark-2 .section-eyebrow { color: var(--sage-light); }
+.tile-dark-2 .section-eyebrow { color: var(--peach); }
 
 .tile-dark h1, .tile-dark h2, .tile-dark h3, .tile-dark h4,
 .tile-dark p, .tile-dark .hero-display, .tile-dark .display-large,
 .tile-dark .display-medium, .tile-dark .tagline, .tile-dark .body-text {
-  color: rgba(255,255,255,0.9);
+  color: rgba(253,240,238,0.94);
 }
 .tile-dark .body-secondary,
 .tile-dark .muted {
-  color: rgba(255,255,255,0.6);
+  color: rgba(253,240,238,0.68);
 }
 
 .tile-dark-2 h1, .tile-dark-2 h2, .tile-dark-2 h3,
 .tile-dark-2 p, .tile-dark-2 .hero-display {
-  color: rgba(255,255,255,0.9);
+  color: rgba(253,240,238,0.94);
 }
-.tile-dark-2 .muted { color: rgba(255,255,255,0.55); }
+.tile-dark-2 .muted { color: rgba(253,240,238,0.66); }
 
 /* =============================================
    BUTTONS — pill shape
@@ -338,7 +339,7 @@ nav#navbar {
   align-items: center;
   gap: 8px;
   background: var(--sage);
-  color: #fff;
+  color: var(--dark-3);
   border-radius: 9999px;
   padding: 11px 22px;
   font-size: 17px;
@@ -356,12 +357,12 @@ nav#navbar {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: var(--sage);
+  color: var(--dark-1);
   border-radius: 9999px;
   padding: 11px 22px;
   font-size: 17px;
   font-weight: 400;
-  border: 1px solid var(--sage);
+  border: 1px solid var(--sage-dark);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
   letter-spacing: -0.374px;
@@ -374,7 +375,7 @@ nav#navbar {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #fff;
+  background: var(--white);
   color: var(--dark-1);
   border-radius: 9999px;
   padding: 11px 22px;
@@ -393,12 +394,12 @@ nav#navbar {
   align-items: center;
   gap: 8px;
   background: transparent;
-  color: #fff;
+  color: var(--white);
   border-radius: 9999px;
   padding: 11px 22px;
   font-size: 17px;
   font-weight: 400;
-  border: 1px solid rgba(255,255,255,0.5);
+  border: 1px solid rgba(253,240,238,0.5);
   cursor: pointer;
   transition: border-color 0.2s;
   letter-spacing: -0.374px;
@@ -494,8 +495,8 @@ nav#navbar {
   background: var(--white);
   border-radius: 18px;
   padding: 28px;
-  border: 1px solid rgba(29,29,31,0.06);
-  box-shadow: rgba(0,0,0,0.06) 0 12px 30px;
+  border: 1px solid rgba(100,121,104,0.08);
+  box-shadow: rgba(100,121,104,0.08) 0 12px 30px;
 }
 .testimonial-quote {
   font-size: 15px;
@@ -509,7 +510,7 @@ nav#navbar {
 .testimonial-quote-large {
   font-size: clamp(18px, 2vw, 22px);
   line-height: 1.75;
-  color: rgba(255,255,255,0.82);
+  color: rgba(253,240,238,0.84);
 }
 .testimonial-author {
   font-size: 14px;
@@ -530,12 +531,12 @@ nav#navbar {
   margin-top: 40px;
 }
 .testimonial-featured {
-  background: linear-gradient(180deg, var(--dark-1), var(--dark-2));
+  background: linear-gradient(180deg, var(--dark-1), var(--dark-3));
   border-radius: 24px;
   padding: 32px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(253,240,238,0.1);
   box-shadow: var(--shadow-product);
-  color: #fff;
+  color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -554,23 +555,23 @@ nav#navbar {
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--sage-light);
+  color: var(--peach);
 }
 .testimonial-badge {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.68);
-  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(253,240,238,0.74);
+  border: 1px solid rgba(253,240,238,0.14);
   padding: 6px 10px;
   border-radius: 9999px;
 }
 .testimonial-featured .testimonial-author {
-  color: rgba(255,255,255,0.95);
+  color: rgba(253,240,238,0.96);
   margin-top: 22px;
 }
 .testimonial-featured .testimonial-label {
-  color: rgba(255,255,255,0.55);
+  color: rgba(253,240,238,0.68);
 }
 .testimonial-grid {
   display: grid;
@@ -674,7 +675,7 @@ nav#navbar {
   align-items: center;
   justify-content: center;
   padding: 80px 22px 80px;
-  background-color: #0000001e;
+  background-color: #fdf0ee;
   background-image: url('/Images/new/hero.webp');
   background-size: cover;
   background-position: center;
@@ -687,9 +688,9 @@ nav#navbar {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.6) 0%,
-    rgba(0,0,0,0.6) 50%,
-    rgba(0,0,0,0.6) 100%
+    rgba(253,240,238,0.14) 0%,
+    rgba(100,121,104,0.44) 55%,
+    rgba(79,97,86,0.7) 100%
   );
   pointer-events: none;
 }
@@ -699,7 +700,7 @@ nav#navbar {
   position: absolute;
   top: 0; right: 0;
   width: 100%; height: 600px;
-  background: radial-gradient(circle at top right, rgba(88,122,84,0.12) 0%, transparent 65%);
+  background: radial-gradient(circle at top right, rgba(250,212,197,0.34) 0%, transparent 62%);
   pointer-events: none;
 }
 
@@ -718,7 +719,7 @@ nav#navbar {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color:#ffffff;
+  color:#fff7f4;
   margin-bottom: 28px;
 }
 
@@ -739,11 +740,11 @@ nav#navbar {
   font-size: clamp(64px, 12vw, 152px);
   font-weight: 400;
   letter-spacing: 0.5px;
-  color: #fff;
+  color: #fff8f6;
 }
 
 .hero-line-inner.line-2 {
-  color: var(--sage-light);
+  color: var(--peach);
 }
 
 /* Legacy — kept for inner pages that may use it */
@@ -753,7 +754,7 @@ nav#navbar {
   font-weight: 400;
   line-height: 0.95;
   letter-spacing: 0.5px;
-  color: #fff;
+  color: #fff8f6;
   margin-bottom: 20px;
 }
 
@@ -762,7 +763,7 @@ nav#navbar {
   font-weight: 400;
   line-height: 1.47;
   letter-spacing: -0.374px;
-  color: rgba(255,255,255);
+  color: rgba(253,240,238,0.9);
   max-width: 520px;
   margin: 0 auto 40px;
 }
@@ -784,13 +785,13 @@ nav#navbar {
 }
 .hero-trust-item {
   font-size: 11px;
-  color: rgba(255,255,255,0.35);
+  color: rgba(253,240,238,0.68);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 .hero-trust-dot {
   width: 3px; height: 3px;
-  background: rgba(255,255,255,0.18);
+  background: rgba(253,240,238,0.34);
   border-radius: 50%;
 }
 
@@ -798,7 +799,7 @@ nav#navbar {
    NEXORA-STYLE TICKER / MARQUEE
 ============================================= */
 .ticker-wrap {
-  background: var(--sage);
+  background: linear-gradient(90deg, var(--peach), var(--sage));
   padding: 13px 0;
   overflow: hidden;
   white-space: nowrap;
@@ -816,12 +817,12 @@ nav#navbar {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--dark-3);
   padding: 0 32px;
 }
 
 .ticker-sep {
-  color: rgba(255,255,255,0.4);
+  color: rgba(79,97,86,0.46);
   font-size: 9px;
   flex-shrink: 0;
 }
@@ -903,7 +904,7 @@ nav#navbar {
 .form-group textarea:focus,
 .form-group select:focus {
   border-color: var(--sage);
-  box-shadow: 0 0 0 3px rgba(88,122,84,0.15);
+  box-shadow: 0 0 0 3px rgba(161,186,155,0.22);
 }
 .form-group input.error,
 .form-group textarea.error {
@@ -923,7 +924,7 @@ nav#navbar {
   width: 100%;
   padding: 14px 22px;
   background: var(--sage);
-  color: #fff;
+  color: var(--dark-3);
   font-family: var(--font-system);
   font-size: 17px;
   font-weight: 400;
@@ -1009,14 +1010,14 @@ nav#navbar {
 .pillar-item h3 {
   font-size: 17px;
   font-weight: 600;
-  color: rgba(255,255,255,0.9);
+  color: rgba(253,240,238,0.94);
   line-height: 1.24;
   letter-spacing: -0.374px;
   margin-bottom: 10px;
 }
 .pillar-item p {
   font-size: 14px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(253,240,238,0.7);
   line-height: 1.5;
   letter-spacing: -0.224px;
 }
@@ -1110,7 +1111,7 @@ nav#navbar {
   padding-left: 18px;
   font-size: 17px;
   font-weight: 400;
-  color: rgba(255,255,255,0.75);
+  color: rgba(253,240,238,0.82);
   line-height: 1.47;
   letter-spacing: -0.374px;
 }
@@ -1122,7 +1123,7 @@ nav#navbar {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--sage-light);
+  background: var(--peach);
 }
 
 /* Differentiators */
@@ -1130,13 +1131,13 @@ nav#navbar {
 .usp-item h4 {
   font-size: 17px;
   font-weight: 600;
-  color: rgba(255,255,255,0.9);
+  color: rgba(253,240,238,0.94);
   margin-bottom: 4px;
   letter-spacing: -0.374px;
 }
 .usp-item p {
   font-size: 14px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(253,240,238,0.72);
   line-height: 1.5;
   letter-spacing: -0.224px;
 }
@@ -1247,7 +1248,7 @@ nav#navbar {
    FOOTER — dark tile
 ============================================= */
 footer {
-  background: var(--dark-1);
+  background: linear-gradient(180deg, var(--dark-2), var(--dark-3));
   padding: 72px 22px 40px;
 }
 .footer-top {
@@ -1264,13 +1265,13 @@ footer {
 .footer-brand-name {
   font-size: 17px;
   font-weight: 600;
-  color: #f5f5f7;
+  color: #fdf0ee;
   letter-spacing: -0.374px;
   margin-bottom: 10px;
 }
 .footer-brand-tagline {
   font-size: 14px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(253,240,238,0.64);
   line-height: 1.55;
   letter-spacing: -0.224px;
   max-width: 240px;
@@ -1283,22 +1284,22 @@ footer {
 .social-btn {
   width: 36px; height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(253,240,238,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,0.45);
+  color: rgba(253,240,238,0.56);
   font-size: 14px;
   transition: border-color 0.2s, color 0.2s;
 }
 .social-btn:hover {
-  border-color: rgba(255,255,255,0.35);
-  color: rgba(255,255,255,0.8);
+  border-color: rgba(253,240,238,0.35);
+  color: rgba(253,240,238,0.84);
 }
 .footer-col h4 {
   font-size: 12px;
   font-weight: 600;
-  color: rgba(255,255,255,0.5);
+  color: rgba(253,240,238,0.66);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -1307,11 +1308,11 @@ footer {
 .footer-col ul li { margin-bottom: 10px; }
 .footer-col ul li a {
   font-size: 14px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(253,240,238,0.68);
   letter-spacing: -0.224px;
   transition: color 0.2s;
 }
-.footer-col ul li a:hover { color: rgba(255,255,255,0.85); }
+.footer-col ul li a:hover { color: rgba(253,240,238,0.92); }
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -1323,7 +1324,7 @@ footer {
 }
 .footer-bottom p {
   font-size: 12px;
-  color: rgba(255,255,255,0.25);
+  color: rgba(253,240,238,0.38);
   letter-spacing: -0.1px;
 }
 
@@ -1338,7 +1339,7 @@ footer {
 .page-hero h1 {
   font-size: clamp(32px, 5vw, 56px);
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
   line-height: 1.07;
   letter-spacing: -0.28px;
   margin-bottom: 16px;
@@ -1346,7 +1347,7 @@ footer {
 .page-hero p {
   font-size: 17px;
   font-weight: 400;
-  color: rgba(255,255,255,0.6);
+  color: rgba(253,240,238,0.76);
   line-height: 1.47;
   letter-spacing: -0.374px;
   max-width: 560px;
@@ -1359,7 +1360,7 @@ footer {
 .ripple {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.25);
+  background: rgba(253,240,238,0.28);
   transform: scale(0);
   animation: ripple-anim 0.5s linear;
   pointer-events: none;
