@@ -150,8 +150,8 @@ export default function BookPage() {
 
                   <p style={{ fontSize: '0.78rem', color: 'var(--text-soft)', marginBottom: '20px' }}>
                     By submitting this form, you consent to our{' '}
-                    <Link href="/#privacy" style={{ color: 'var(--sage)' }}>Privacy Policy</Link> and{' '}
-                    <Link href="/#terms" style={{ color: 'var(--sage)' }}>Terms &amp; Conditions</Link>.
+                    <Link href="/legal" style={{ color: 'var(--sage)' }}>Privacy Policy</Link> and{' '}
+                    <Link href="/legal" style={{ color: 'var(--sage)' }}>Terms &amp; Conditions</Link>.
                   </p>
 
                   <button type="submit" className="btn-submit" disabled={stage === 'loading'}>

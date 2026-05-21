@@ -1,8 +1,7 @@
 ﻿"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import initScripts from "./scripts";
+import { Reveal, RevealSpan } from "./components/MotionReveal";
 
 const featuredServices = [
   {
@@ -78,37 +77,40 @@ const tickerItems = [
 ];
 
 export default function Home() {
-  useEffect(() => {
-    return initScripts();
-  }, []);
-
   return (
     <>
       {/* ======== HERO ======== */}
       <section id="hero">
-        <div className="hero-content">
-          <span className="hero-eyebrow">Mental Wellness</span>
+        <Reveal className="hero-content" variant="fade" amount={0.55} delay={1.25}>
+          <RevealSpan className="hero-eyebrow" variant="fade" delay={1.33}>
+            Mental Wellness
+          </RevealSpan>
           <div className="hero-split">
             <div className="hero-line-wrap">
-              <span className="hero-line-inner">A Safe Place</span>
+              <RevealSpan className="hero-line-inner" variant="blurUp" delay={1.42}>
+                A Safe Place
+              </RevealSpan>
             </div>
             <div className="hero-line-wrap">
-              <span className="hero-line-inner line-2">To Heal.</span>
+              <RevealSpan className="hero-line-inner line-2" variant="blurUp" delay={1.54}>
+                To Heal.
+              </RevealSpan>
             </div>
           </div>
-          <p className="hero-subtext">
-            You are seen, heard, and supported as you move toward clarity,
-            peace, and a more resilient life.
-          </p>
-          <div className="hero-actions">
+          <Reveal className="hero-subtext" variant="fade" delay={1.62}>
+            Welcome to The Nestling Space, a gentle home for your healing and growth.
+            Here, you are seen, heard, and supported as you untangle life&apos;s worries,
+            build emotional strength, and move toward clarity, peace, and purpose.
+          </Reveal>
+          <Reveal className="hero-actions" variant="fade" delay={1.72}>
             <Link href="/book" className="btn-dark-primary">
               Book a Session
             </Link>
             <Link href="/services" className="btn-dark-secondary">
               Our Services
             </Link>
-          </div>
-          <div className="hero-trust">
+          </Reveal>
+          <Reveal className="hero-trust" variant="fade" delay={1.82}>
             <span className="hero-trust-item">Evidence-Based Care</span>
             <span className="hero-trust-dot"></span>
             <span className="hero-trust-item">Culturally Sensitive</span>
@@ -116,8 +118,8 @@ export default function Home() {
             <span className="hero-trust-item">Online &amp; In-Person</span>
             <span className="hero-trust-dot"></span>
             <span className="hero-trust-item">Confidential</span>
-          </div>
-        </div>
+          </Reveal>
+        </Reveal>
       </section>
 
       {/* ======== TICKER ======== */}
@@ -134,7 +136,7 @@ export default function Home() {
       <div className="tile tile-white">
         <div className="tile-inner">
           <div className="about-preview-grid">
-            <div className="about-preview-photo photo-shadow aos aos-slide-left">
+            <Reveal className="about-preview-photo photo-shadow" variant="slideLeft" amount={0.3}>
               <Image
                 src="/Images/new/old-pics (1).webp"
                 alt="Dr Mugabe, founder of The Nestling Space"
@@ -143,8 +145,8 @@ export default function Home() {
                 sizes="(max-width: 900px) 100vw, 100vw"
                 style={{ objectFit: "cover" }}
               />
-            </div>
-            <div className="aos aos-slide-right aos-d2">
+            </Reveal>
+            <Reveal variant="slideRight" delay={0.12} amount={0.3}>
               <div className="section-header">
                 <span className="eyebrow section-eyebrow">Who We Are</span>
                 <h2
@@ -178,7 +180,92 @@ export default function Home() {
                   Meet Dr. Mugabe →
                 </Link>
               </div>
-            </div>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+
+      {/* ======== VIDEO FEATURE ======== */}
+      <div className="tile tile-dark">
+        <div className="tile-inner-wide">
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)" }}>
+              In Their Words
+            </span>
+            <h2
+              className="display-large"
+              style={{ color: "rgba(255,255,255,0.94)", marginTop: "8px", marginBottom: "12px" }}
+            >
+              Watch the practice in motion
+            </h2>
+            <p
+              className="body-text"
+              style={{ color: "rgba(255,255,255,0.62)", maxWidth: "620px", margin: "0 auto" }}
+            >
+              Short clips from Dr. Mugabe and the Nestling Space environment, now served from the public folder.
+            </p>
+          </Reveal>
+
+          <div className="grid-2" style={{ marginTop: "40px" }}>
+            <Reveal variant="slideLeft" amount={0.2}>
+              <div
+                style={{
+                  borderRadius: "22px",
+                  overflow: "hidden",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "var(--shadow-product)",
+                }}
+              >
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/Images/new/nestling (2).webp"
+                  style={{ width: "100%", height: "320px", objectFit: "cover" }}
+                >
+                  <source src="/videos/dr-m-mugabe.mp4" type="video/mp4" />
+                </video>
+                <div style={{ padding: "18px 20px 22px" }}>
+                  <div className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)", marginBottom: "10px" }}>
+                    Founder Clip
+                  </div>
+                  <p className="body-text" style={{ color: "rgba(255,255,255,0.72)" }}>
+                    A short introduction from Dr. Mugabe about the heart behind the practice.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="slideRight" delay={0.08} amount={0.2}>
+              <div
+                style={{
+                  borderRadius: "22px",
+                  overflow: "hidden",
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "var(--shadow-product)",
+                }}
+              >
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster="/Images/new/nestling (20).webp"
+                  style={{ width: "100%", height: "320px", objectFit: "cover" }}
+                >
+                  <source src="/videos/dr-mugabe.mp4" type="video/mp4" />
+                </video>
+                <div style={{ padding: "18px 20px 22px" }}>
+                  <div className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)", marginBottom: "10px" }}>
+                    Practice Walkthrough
+                  </div>
+                  <p className="body-text" style={{ color: "rgba(255,255,255,0.72)" }}>
+                    A visual look at the calm, private space clients step into.
+                  </p>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>
@@ -186,27 +273,30 @@ export default function Home() {
       {/* ======== SERVICES PREVIEW ======== */}
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
-          <div className="section-header centered">
-            <span className="eyebrow section-eyebrow aos aos-fade">What We Offer</span>
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow">What We Offer</span>
             <h2
-              className="display-large aos aos-blur-up aos-d1"
+              className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
               What we offer
             </h2>
             <p
-              className="body-text aos aos-blur-up aos-d2"
+              className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "560px", margin: "0 auto" }}
             >
               Comprehensive counselling for individuals, couples, families, and
               organisations navigating real emotional and relational pressures.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid-4">
             {featuredServices.map((service, index) => (
-              <div
-                className={`service-card reveal reveal-delay-${index + 1}`}
+              <Reveal
+                className="service-card"
+                variant="scaleUp"
+                delay={index * 0.08}
+                amount={0.2}
                 key={service.title}
               >
                 <Image
@@ -221,37 +311,37 @@ export default function Home() {
                   <h3 className="card-title">{service.title}</h3>
                   <p className="card-desc">{service.description}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div style={{ textAlign: "center", marginTop: "40px" }} className="reveal">
+          <Reveal style={{ textAlign: "center", marginTop: "40px" }} variant="fade" amount={0.2}>
             <Link href="/services" className="btn-secondary">
               View all services
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
 
       {/* ======== PRACTICE GALLERY ======== */}
       <div className="tile tile-white">
         <div className="tile-inner-wide">
-          <div className="section-header centered">
-            <span className="eyebrow section-eyebrow aos aos-fade">Our Practice</span>
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow">Our Practice</span>
             <h2
-              className="display-large aos aos-blur-up aos-d1"
+              className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
               Healing in action
             </h2>
             <p
-              className="body-text aos aos-blur-up aos-d2"
+              className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "520px", margin: "0 auto" }}
             >
               Real sessions, real spaces, real people — a glimpse into the warmth and care at The Nestling Space.
             </p>
-          </div>
-          <div className="gallery-grid reveal" style={{ marginTop: "40px" }}>
+          </Reveal>
+          <Reveal className="gallery-grid" style={{ marginTop: "40px" }} variant="blurUp" amount={0.2}>
             <Image
               src="/Images/new/nestling (10).webp"
               alt="Couples conversation at Nestling Space"
@@ -276,8 +366,8 @@ export default function Home() {
               sizes="(max-width: 768px) 100vw, 33vw"
               style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
             />
-          </div>
-          <div className="gallery-grid reveal" style={{ marginTop: "12px" }}>
+          </Reveal>
+          <Reveal className="gallery-grid" style={{ marginTop: "12px" }} variant="blurUp" amount={0.2} delay={0.08}>
             <Image
               src="/Images/new/nestling (1).webp"
               alt="Dr Mugabe, founder of Nestling Space, in the garden"
@@ -302,14 +392,14 @@ export default function Home() {
               sizes="(max-width: 768px) 100vw, 33vw"
               style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
             />
-          </div>
+          </Reveal>
         </div>
       </div>
 
       {/* ======== QUOTE TILE ======== */}
       <div className="tile tile-dark-2">
         <div className="tile-inner" style={{ textAlign: "center" }}>
-          <div className="aos aos-scale-up">
+          <Reveal variant="scaleUp" amount={0.3}>
             <h2
               style={{
                 fontSize: "clamp(28px, 4vw, 48px)",
@@ -338,25 +428,25 @@ export default function Home() {
             <Link href="/book" className="btn-dark-primary">
               Take the first step
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
 
       {/* ======== EVENTS PREVIEW ======== */}
       <div className="tile tile-white">
         <div className="tile-inner">
-          <div className="section-header">
-            <span className="eyebrow section-eyebrow aos aos-fade">Events &amp; Webinars</span>
+          <Reveal className="section-header" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow">Events &amp; Webinars</span>
             <h2
-              className="display-large aos aos-blur-up aos-d1"
+              className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
               Upcoming Events &amp; Webinars
             </h2>
-            <p className="body-text aos aos-blur-up aos-d2" style={{ color: "var(--ink-secondary)" }}>
+            <p className="body-text" style={{ color: "var(--ink-secondary)" }}>
               Workshops, training sessions, and group events open to the public.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid-3">
             {[
@@ -376,8 +466,11 @@ export default function Home() {
                 price: "Registration opens shortly",
               },
             ].map((event, i) => (
-              <div
-                className={`event-card reveal reveal-delay-${i + 1}`}
+              <Reveal
+                className="event-card"
+                variant="scaleUp"
+                delay={i * 0.08}
+                amount={0.2}
                 key={event.title}
               >
                 <span className="event-date">{event.date}</span>
@@ -386,54 +479,65 @@ export default function Home() {
                 <Link href="/events" className="link-sage" style={{ fontSize: "14px" }}>
                   Learn more →
                 </Link>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div style={{ marginTop: "40px" }} className="reveal">
+          <Reveal style={{ marginTop: "40px" }} variant="fade" amount={0.2}>
             <Link href="/events" className="link-sage">
               See all events →
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
 
       {/* ======== TESTIMONIALS ======== */}
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
-          <div className="section-header">
-            <span className="eyebrow section-eyebrow aos aos-fade">Stories of Healing</span>
+          <Reveal className="section-header" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow">Stories of Healing</span>
             <h2
-              className="display-large aos aos-blur-up aos-d1"
+              className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px" }}
             >
               What our clients say
             </h2>
-          </div>
+            <p
+              className="body-text"
+              style={{ color: "var(--ink-secondary)", maxWidth: "560px", marginTop: "12px" }}
+            >
+              Discover how The Nestling Space with Dr. M. Mugabe has positively impacted the lives of our clients.
+            </p>
+          </Reveal>
 
-          <div className="testimonials-track-wrap aos aos-blur-up aos-d2" id="testimonials-wrap">
-            <div className="testimonials-track" id="testimonials-track">
-              {testimonials.map((t) => (
-                <div
+          <div className="testimonials-layout">
+            <Reveal className="testimonial-featured" variant="scaleUp" amount={0.2}>
+              <div className="testimonial-featured-top">
+                <span className="testimonial-eyebrow">Featured Story</span>
+                <span className="testimonial-badge">Client voice</span>
+              </div>
+              <p className="testimonial-quote testimonial-quote-large">
+                &ldquo;{testimonials[0].quote}&rdquo;
+              </p>
+              <div className="testimonial-author">{testimonials[0].author}</div>
+              <div className="testimonial-label">{testimonials[0].label}</div>
+            </Reveal>
+
+            <div className="testimonial-grid">
+              {testimonials.slice(1).map((t, index) => (
+                <Reveal
                   className="testimonial-card"
+                  variant="blurUp"
+                  delay={index * 0.08}
+                  amount={0.2}
                   key={`${t.author}-${t.label}`}
                 >
                   <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
                   <div className="testimonial-author">{t.author}</div>
                   <div className="testimonial-label">{t.label}</div>
-                </div>
+                </Reveal>
               ))}
             </div>
-          </div>
-
-          <div className="scroll-dots" id="scroll-dots">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                className={`scroll-dot${i === 0 ? " active" : ""}`}
-                aria-label={`Go to testimonial ${i + 1}`}
-              />
-            ))}
           </div>
         </div>
       </div>
@@ -441,15 +545,18 @@ export default function Home() {
       {/* ======== BLOG PREVIEW ======== */}
       <div className="tile tile-white">
         <div className="tile-inner">
-          <div className="section-header">
-            <span className="eyebrow section-eyebrow aos aos-fade">Latest Updates</span>
+          <Reveal className="section-header" variant="fade" amount={0.25}>
+            <span className="eyebrow section-eyebrow">Feedback</span>
             <h2
-              className="display-large aos aos-blur-up aos-d1"
+              className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              Latest Updates
+              Share your feedback
             </h2>
-          </div>
+            <p className="body-text" style={{ color: "var(--ink-secondary)", maxWidth: "540px", margin: "0 auto" }}>
+              Use the contact page to send us your thoughts, comments, or suggestions.
+            </p>
+          </Reveal>
 
           <div className="grid-3">
             {[
@@ -475,8 +582,11 @@ export default function Home() {
                   "Many couples wait too long before reaching out. Here is how to recognise the right moment to ask for support.",
               },
             ].map((post, i) => (
-              <div
-                className={`blog-card reveal reveal-delay-${i + 1}`}
+              <Reveal
+                className="blog-card"
+                variant="scaleUp"
+                delay={i * 0.08}
+                amount={0.2}
                 key={post.title}
               >
                 <div
@@ -501,15 +611,15 @@ export default function Home() {
                   <h3 className="blog-title">{post.title}</h3>
                   <p className="blog-excerpt">{post.excerpt}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div style={{ marginTop: "40px" }} className="reveal">
+          <Reveal style={{ marginTop: "40px" }} variant="fade" amount={0.2}>
             <Link href="/blog" className="link-sage">
               Read all updates →
             </Link>
-          </div>
+          </Reveal>
         </div>
       </div>
 

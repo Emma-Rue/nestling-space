@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import initScripts from "../scripts";
+import { Reveal } from "../components/MotionReveal";
 
 const featuredServices = [
   {
@@ -10,14 +9,14 @@ const featuredServices = [
     alt: "Individual counselling session at Nestling Space",
     title: "Individual Counselling",
     description:
-      "Support for youth, adults, and the aged facing stress, grief, depression, anxiety, life transitions, and emotional overwhelm.",
+      "Personal therapy for stress, grief, depression, anxiety, life transitions, and emotional overwhelm.",
   },
   {
     image: "/Images/new/nestling (8).webp",
     alt: "Marriage and relationship counselling session",
     title: "Marriage & Relationship Counselling",
     description:
-      "Premarital guidance and marriage counselling focused on communication, conflict resolution, trust, intimacy, and emotional reconnection.",
+      "Support for couples to improve communication, resolve conflict, rebuild trust, and reconnect with one another.",
   },
   {
     image: "/Images/new/nestling (13).webp",
@@ -39,62 +38,62 @@ const fullServices = [
   {
     title: "Youth Counselling",
     description:
-      "Guidance for adolescents and young adults navigating identity, academic pressure, relationships, and emotional development.",
+      "A safe and confidential space where young people can explore stress, anxiety, depression, trauma, grief, and personal struggles while building healthier coping strategies.",
   },
   {
-    title: "Adult & Aged Therapy",
+    title: "Inner Child Healing Therapy",
     description:
-      "Therapy for anxiety, depression, grief, burnout, life transitions, and age-related psychological challenges.",
+      "Guided support that helps identify unresolved childhood wounds, process past pain, and build healthier emotional patterns for the future.",
   },
   {
-    title: "Family Counselling",
+    title: "Couples & Marriage Counselling",
     description:
-      "Support for conflict resolution, family transitions, communication repair, and stronger home dynamics.",
+      "Gentle, neutral support for partners to reconnect, improve communication, resolve conflict, rebuild trust, and create a safer, stronger relationship.",
   },
   {
-    title: "Parenting Support",
+    title: "Family Counseling",
     description:
-      "Positive, practical child-rearing guidance for parents facing behavioural, emotional, or relational challenges in the home.",
+      "Support for families to listen, heal, and grow together while improving communication, parenting challenges, generational conflict, and family trauma.",
   },
   {
-    title: "Premarital Counselling",
+    title: "Trauma & Emotional Healing",
     description:
-      "Structured conversations and skill-building to help couples build a healthy foundation before marriage.",
+      "Therapy for people who have experienced traumatic events, abuse, loss, or deep emotional wounds. Sessions focus on safe processing, emotional stability, and peace.",
   },
   {
-    title: "Marriage Counselling",
+    title: "Stress, Anxiety & Burnout Support",
     description:
-      "Help for couples dealing with communication breakdown, conflict, infidelity, intimacy concerns, and disconnection.",
+      "Practical techniques and therapeutic support for overwhelming stress, anxiety, and emotional exhaustion so clients can restore balance and resilience.",
   },
   {
-    title: "School-Based Counselling",
+    title: "Women&apos;s Emotional Wellness",
     description:
-      "Direct emotional support for school children facing bullying, pressure, social difficulties, and mental health concerns.",
+      "A supportive space for women navigating life transitions, relationship challenges, motherhood, identity struggles, emotional wounds, and personal growth.",
   },
   {
-    title: "Corporate Well-being Programs",
+    title: "Group Healing Sessions",
     description:
-      "Tailored employee support focused on stress, burnout prevention, workplace conflict, and mentally healthy cultures.",
+      "Facilitated small-group sessions where participants share experiences, gain support, and learn together around emotional healing, self-awareness, and relational health.",
   },
   {
-    title: "Mental Health Workshops",
+    title: "Temperament & Personality Understanding",
     description:
-      "Interactive training for schools, companies, parents, youth groups, and community organisations.",
+      "This service helps clients understand their temperament, personality patterns, and emotional responses so they can communicate and relate more healthily.",
   },
   {
-    title: "Boot Camps & Training Packages",
+    title: "Faith-Based Counseling",
     description:
-      "Custom sessions on awareness, resilience, communication, conflict resolution, and positive parenting skills.",
+      "Optional spiritual guidance alongside psychological counseling for people who desire biblical support in their healing journey.",
   },
   {
-    title: "Online Counselling",
+    title: "Workshops & Personal Development Programs",
     description:
-      "Confidential telehealth sessions for clients across Zimbabwe and in the diaspora who need remote access.",
+      "Educational and therapeutic workshops on the inner child, emotional intelligence, healthy relationships, boundaries, assertiveness, and stress management.",
   },
   {
-    title: "Group Counselling Sessions",
+    title: "Online Counseling",
     description:
-      "Facilitated spaces for shared learning, mutual support, and healing around common emotional or relational themes.",
+      "Secure virtual counseling for clients who prefer remote support or live outside the local area, with the same confidentiality and care as in-person sessions.",
   },
 ];
 
@@ -130,10 +129,6 @@ const differentiators = [
 ];
 
 export default function ServicesPage() {
-  useEffect(() => {
-    return initScripts();
-  }, []);
-
   return (
     <>
       {/* ======== PAGE HERO ======== */}
@@ -154,7 +149,7 @@ export default function ServicesPage() {
       {/* ======== FEATURED SERVICES ======== */}
       <div className="tile tile-white">
         <div className="tile-inner-wide">
-          <div className="section-header centered reveal">
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow">Core Services</span>
             <h2
               className="display-large"
@@ -162,11 +157,14 @@ export default function ServicesPage() {
             >
               Our core offerings
             </h2>
-          </div>
+          </Reveal>
           <div className="grid-4">
             {featuredServices.map((service, index) => (
-              <div
-                className={`service-card reveal reveal-delay-${index + 1}`}
+              <Reveal
+                className="service-card"
+                variant="scaleUp"
+                delay={index * 0.08}
+                amount={0.2}
                 key={service.title}
               >
                 <Image
@@ -181,7 +179,7 @@ export default function ServicesPage() {
                   <h3 className="card-title">{service.title}</h3>
                   <p className="card-desc">{service.description}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -190,34 +188,37 @@ export default function ServicesPage() {
       {/* ======== ALL SERVICES ======== */}
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
-          <div className="section-header reveal">
+          <Reveal className="section-header" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow">Full Range</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              All 12 services
+              Services in detail
             </h2>
             <p
               className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "600px" }}
             >
-              The practice serves clients across the life span and also partners
-              with organisations that want structured mental health support.
+              Explore the full range of care we offer across personal healing, relationships,
+              family systems, and group growth.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid-3">
             {fullServices.map((service, index) => (
-              <div
-                className={`utility-card reveal reveal-delay-${(index % 3) + 1}`}
+              <Reveal
+                className="utility-card"
+                variant="scaleUp"
+                delay={(index % 3) * 0.08}
+                amount={0.2}
                 key={service.title}
               >
                 <h3>
                   {index + 1}. {service.title}
                 </h3>
                 <p>{service.description}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -226,7 +227,7 @@ export default function ServicesPage() {
       {/* ======== DELIVERY METHODS TILE ======== */}
       <div className="tile tile-dark-2">
         <div className="tile-inner">
-          <div className="section-header reveal">
+          <Reveal className="section-header" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)" }}>
               How We Work
             </span>
@@ -241,8 +242,8 @@ export default function ServicesPage() {
             >
               Flexible delivery methods
             </h2>
-          </div>
-          <div className="grid-2 reveal">
+          </Reveal>
+          <Reveal className="grid-2" variant="slideLeft" amount={0.25}>
             <div>
               <h3
                 className="body-strong"
@@ -272,14 +273,14 @@ export default function ServicesPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
 
       {/* ======== CTA TILE ======== */}
       <div className="tile tile-white">
         <div className="tile-inner" style={{ textAlign: "center" }}>
-          <div className="reveal">
+          <Reveal variant="scaleUp" amount={0.25}>
             <span
               className="eyebrow section-eyebrow"
               style={{ justifyContent: "center", display: "block" }}
@@ -307,7 +308,7 @@ export default function ServicesPage() {
                 Ask a Question
               </Link>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
 

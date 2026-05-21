@@ -15,10 +15,9 @@ export default function LegalPage() {
         >
           Legal
         </span>
-        <h1>Policies &amp; Terms</h1>
+        <h1>Policies, Terms &amp; Privacy</h1>
         <p>
-          Everything you need to know about how we handle your data and manage
-          our services.
+          Clear information about how we protect your data, handle payments, and manage your sessions.
         </p>
       </div>
 
@@ -55,6 +54,12 @@ export default function LegalPage() {
                   deeply to us. This Privacy Policy explains how we collect, use, and
                   protect your personal information when you use our website and mental
                   health services.
+                </p>
+
+                <h3>Who We Are</h3>
+                <p>
+                  The Nestling Space is a mental health and wellness practice providing counselling,
+                  emotional support, and personal growth services in a safe, confidential environment.
                 </p>
 
                 <h3>Information We Collect</h3>
@@ -95,9 +100,34 @@ export default function LegalPage() {
 
                 <h3>When We May Share Information</h3>
                 <p>
-                  Your information may only be disclosed: with your explicit consent,
-                  when required by law, if there is a risk of harm to yourself or others,
-                  or in cases involving abuse or safeguarding concerns.
+                  Your information may only be disclosed with your explicit consent, when required by law,
+                  if there is a risk of harm to yourself or others, or in cases involving abuse or safeguarding concerns.
+                </p>
+
+                <h3>Cookies and Website Tracking</h3>
+                <p>
+                  Our website may use cookies to enhance your browsing experience, understand how visitors
+                  use our site, and improve performance and content. You can disable cookies through your
+                  browser settings.
+                </p>
+
+                <h3>Your Rights</h3>
+                <ul>
+                  <li>Access your personal information</li>
+                  <li>Request corrections</li>
+                  <li>Request deletion of your data where applicable</li>
+                  <li>Withdraw consent at any time</li>
+                </ul>
+
+                <h3>Data Retention</h3>
+                <p>
+                  We keep your information only as long as necessary to provide our services and meet legal
+                  and professional obligations.
+                </p>
+
+                <h3>Children&apos;s Privacy</h3>
+                <p>
+                  Our services are not provided to individuals under 18 without consent from a parent or guardian.
                 </p>
 
                 <h3>Contact Us</h3>
@@ -107,6 +137,14 @@ export default function LegalPage() {
                     href="mailto:nestlingsafespace@gmail.com"
                     style={{ color: "var(--sage)" }}
                   >
+
+                  <h3>Contact Us</h3>
+                  <p>
+                    If you have questions about these terms, please contact us at{" "}
+                    <a href="mailto:nestlingsafespace@gmail.com" style={{ color: "var(--sage)" }}>
+                      nestlingsafespace@gmail.com
+                    </a>
+                  </p>
                     nestlingsafespace@gmail.com
                   </a>
                 </p>

@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import initScripts from "../scripts";
+import { Reveal } from "../components/MotionReveal";
 import { FaFlask, FaBrain, FaHeart, FaSeedling } from "react-icons/fa";
 
 const coreValues = [
@@ -35,117 +34,89 @@ const pillars = [
 ];
 
 export default function AboutPage() {
-  useEffect(() => {
-    return initScripts();
-  }, []);
-
   return (
     <>
-      {/* ======== PAGE HERO ======== */}
       <div className="page-hero">
-        <span
-          className="eyebrow"
-          style={{ color: "var(--sage-light)", marginBottom: "12px" }}
-        >
+        <span className="eyebrow" style={{ color: "var(--sage-light)", marginBottom: "12px" }}>
           About Us
         </span>
-        <h1>Rooted in science,<br />service, and human dignity.</h1>
+        <h1>
+          Rooted in compassion,<br />faith-informed care, and human dignity.
+        </h1>
         <p>
-          A mental health practice built from over a decade of counselling,
-          teaching, and community work in Zimbabwe.
+          The Nestling Space is a mental wellness home created for anyone ready to heal,
+          grow, and break free from heavy patterns.
         </p>
       </div>
 
-      {/* ======== STORY TILE ======== */}
       <div className="tile tile-white">
         <div className="tile-inner">
-          <div className="grid-2 reveal">
+          <div className="grid-2">
             <div>
-              <div className="section-header">
+              <Reveal className="section-header" variant="fade" amount={0.25}>
                 <span className="eyebrow section-eyebrow">Our Story</span>
-                <h2
-                  className="display-large"
-                  style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "20px" }}
-                >
-                  How we began
+                <h2 className="display-large" style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "20px" }}>
+                  Mission and vision
                 </h2>
                 <p className="body-text" style={{ color: "var(--ink-secondary)", marginBottom: "16px" }}>
-                  The Nestling Space was founded from a rare blend of clinical
-                  science, public health, teaching, and hands-on counselling
-                  experience. Over a decade of serving as a teacher and guidance
-                  and counselling practitioner revealed how closely emotional,
-                  relational, physical, and social well-being are connected.
+                  We offer gentle, professional support through individual and family counselling,
+                  couples and marriage work, group programs, and corporate wellness services.
                 </p>
                 <p className="body-text" style={{ color: "var(--ink-secondary)" }}>
-                  The practice was formalised after the COVID-19 pandemic made
-                  the psychological cost of fear, grief, isolation, and economic
-                  pressure impossible to ignore. That experience, together with
-                  years of working with students, parents, colleagues, and church
-                  communities, shaped a clear calling: provide culturally
-                  sensitive mental health support that helps break cycles of pain
-                  and restore resilience in individuals, couples, and families.
+                  Rooted in compassion and faith-informed care, we walk with you as you build emotional
+                  resilience, heal from trauma, and learn practical tools for everyday life. Here, your
+                  story matters, your feelings are valid, and your healing journey is honored.
                 </p>
-              </div>
+              </Reveal>
             </div>
             <div>
-              <div className="statement-card">
+              <Reveal className="statement-card" variant="scaleUp" amount={0.25}>
                 <h4>Mission</h4>
                 <p>
-                  To nurture mental well-being through comprehensive, culturally
-                  sensitive counselling for individuals, youth, the aged,
-                  couples, families, schools, and companies through face-to-face
-                  and online support.
+                  To provide a gentle, supportive home for healing and growth through individual,
+                  family, couples, group, and corporate wellness care.
                 </p>
-              </div>
-              <div className="statement-card">
+              </Reveal>
+              <Reveal className="statement-card" variant="scaleUp" delay={0.08} amount={0.25}>
                 <h4>Vision</h4>
                 <p>
-                  To help build a Zimbabwe where mental health is a foundational
-                  pillar of well-being, with accessible and empowering support
-                  reaching families, institutions, and communities locally and
-                  globally.
+                  To help people build emotional strength, live with clarity and purpose, and break free
+                  from heavy patterns that keep them stuck.
                 </p>
-              </div>
-              <div className="statement-card">
+              </Reveal>
+              <Reveal className="statement-card" variant="scaleUp" delay={0.16} amount={0.25}>
                 <h4>Purpose</h4>
                 <p>
-                  To strengthen individuals, families, and organisations with
-                  expert, compassionate, and practical therapeutic care that
-                  improves relationships, resilience, and long-term emotional
-                  wellness.
+                  To walk alongside clients with compassion, practical tools, and faith-informed care
+                  as they heal from trauma and grow into healthier lives.
                 </p>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ======== VALUES TILE ======== */}
       <div className="tile tile-parchment">
         <div className="tile-inner">
-          <div className="section-header centered reveal">
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow">Core Values</span>
-            <h2
-              className="display-large"
-              style={{ color: "var(--ink)", marginTop: "8px" }}
-            >
+            <h2 className="display-large" style={{ color: "var(--ink)", marginTop: "8px" }}>
               What we stand for
             </h2>
-          </div>
-          <div className="value-pills reveal" style={{ justifyContent: "center" }}>
+          </Reveal>
+          <Reveal className="value-pills" style={{ justifyContent: "center" }} variant="fade" amount={0.2}>
             {coreValues.map((v) => (
               <span className="value-pill" key={v}>
                 {v}
               </span>
             ))}
-          </div>
+          </Reveal>
         </div>
       </div>
 
-      {/* ======== PILLARS TILE ======== */}
       <div className="tile tile-dark-2">
         <div className="tile-inner">
-          <div className="section-header centered reveal">
+          <Reveal className="section-header centered" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)" }}>
               Practice Pillars
             </span>
@@ -160,22 +131,21 @@ export default function AboutPage() {
             >
               Built on four pillars
             </h2>
-          </div>
+          </Reveal>
           <div className="pillars-grid">
             {pillars.map((p, i) => (
-              <div className={`pillar-item reveal reveal-delay-${i + 1}`} key={p.title}>
+              <Reveal className="pillar-item" variant="scaleUp" delay={i * 0.08} amount={0.2} key={p.title}>
                 <h3>{p.title}</h3>
                 <p>{p.desc}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </div>
 
-      {/* ======== FOUNDER TILE ======== */}
       <div className="tile tile-white">
         <div className="tile-inner">
-          <div className="grid-2 reveal" style={{ gap: "72px", alignItems: "center" }}>
+          <div className="grid-2" style={{ gap: "72px", alignItems: "center" }}>
             <div className="founder-photo-wrap photo-shadow">
               <Image
                 src="/Images/new/old-pics (1).webp"
@@ -188,25 +158,22 @@ export default function AboutPage() {
             <div>
               <div className="section-header">
                 <span className="eyebrow section-eyebrow">Our Founder</span>
-                <h2
-                  className="display-large"
-                  style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "20px" }}
-                >
-                  Led by Dr. M. Mugabe
+                <h2 className="display-large" style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "20px" }}>
+                  Our Practice
                 </h2>
                 <p className="body-text" style={{ color: "var(--ink-secondary)", marginBottom: "16px" }}>
-                  Dr. M. Mugabe is a Clinical Scientist, Public Health
-                  Practitioner, teacher, and counsellor whose work has
-                  consistently centred on people under pressure. Her experience
-                  in schools, churches, and public health settings shaped a
-                  practical understanding of how emotional pain travels through
-                  families and communities when it is left unaddressed.
+                  The Nestling Space is a mental health and emotional wellness practice based in Harare,
+                  dedicated to creating a safe, compassionate place for healing and growth.
                 </p>
                 <p className="body-text" style={{ color: "var(--ink-secondary)", marginBottom: "28px" }}>
-                  The Nestling Space reflects that long view. It brings together
-                  therapeutic care, prevention, education, and community
-                  understanding to help clients move from survival toward
-                  healing, stronger relationships, and a more resilient future.
+                  We walk alongside children, teens, adults, couples, and families as they navigate
+                  life&apos;s challenges and transitions. Our work is grounded in evidence-based counselling
+                  approaches, a deep respect for each person&apos;s story, and an understanding of the unique
+                  pressures faced in our local context.
+                </p>
+                <p className="body-text" style={{ color: "var(--ink-secondary)", marginBottom: "28px" }}>
+                  Whether you are dealing with anxiety, depression, trauma, grief, relationship strain,
+                  or burnout, we hold space for your pain while helping you build new patterns of hope.
                 </p>
               </div>
 
@@ -224,125 +191,16 @@ export default function AboutPage() {
               </div>
               <div className="credential-item">
                 <FaSeedling />
-                Family Mental Health Advocate
+                Community-Focused Care
               </div>
 
-              <div className="founder-quote">
-                &ldquo;Healing becomes possible when people are met with skill,
-                compassion, and a space where their story is taken seriously.&rdquo;
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ======== GALLERY TILE ======== */}
-      <div className="tile tile-parchment">
-        <div className="tile-inner">
-          <div className="section-header reveal">
-            <span className="eyebrow section-eyebrow">Our Space</span>
-            <h2
-              className="display-large"
-              style={{ color: "var(--ink)", marginTop: "8px" }}
-            >
-              A glimpse of healing
-            </h2>
-          </div>
-          <div className="gallery-grid reveal">
-            <Image
-              src="/Images/new/nestling (2).webp"
-              alt="Dr Mugabe in her therapy room"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", objectPosition: "top", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (21).webp"
-              alt="Individual counselling session at Nestling Space"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (15).webp"
-              alt="Outdoor group workshop session"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "14px" }}
-            />
-          </div>
-          <div className="gallery-grid reveal" style={{ marginTop: "12px" }}>
-            <Image
-              src="/Images/new/nestling (5).webp"
-              alt="Counsellor with notebook in a bright therapy room"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", objectPosition: "top", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/old-pics (3).webp"
-              alt="Dr Mugabe in a counselling session"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (20).webp"
-              alt="Group counselling session at Nestling Space"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "14px" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* ======== CTA ======== */}
-      <div className="tile tile-dark">
-        <div className="tile-inner" style={{ textAlign: "center" }}>
-          <div className="reveal">
-            <span
-              className="eyebrow"
-              style={{ color: "var(--sage-light)", marginBottom: "12px" }}
-            >
-              Ready to begin?
-            </span>
-            <h2
-              style={{
-                fontSize: "40px",
-                fontWeight: 600,
-                color: "#fff",
-                letterSpacing: "-0.4px",
-                marginBottom: "16px",
-                marginTop: "8px",
-              }}
-            >
-              Your healing starts with one step.
-            </h2>
-            <p
-              className="body-text"
-              style={{ color: "rgba(255,255,255,0.55)", marginBottom: "32px" }}
-            >
-              Reaching out is an act of courage.
-            </p>
-            <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/book" className="btn-dark-primary">
-                Book a Session
-              </Link>
-              <Link href="/services" className="btn-dark-secondary">
-                Our Services
+              <Link href="/services" className="link-sage" style={{ marginTop: "24px", display: "inline-flex" }}>
+                Explore services →
               </Link>
             </div>
           </div>
         </div>
       </div>
-
     </>
   );
 }

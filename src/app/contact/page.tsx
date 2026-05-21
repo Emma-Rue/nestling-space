@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { FaWhatsapp, FaEnvelope, FaInstagram, FaFacebook } from 'react-icons/fa'
 
 const SERVICES = [
+  'Website Feedback',
   'Youth Counselling',
   'Adult & Aged Therapy',
   'Family Counselling',
@@ -128,6 +129,9 @@ export default function ContactPage() {
                       <option value="">Not sure yet</option>
                       {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
+                    <p style={{ marginTop: '10px', fontSize: '0.8rem', color: 'var(--text-soft)' }}>
+                      Choose Website Feedback if you want to share comments or suggestions about the site.
+                    </p>
                   </div>
 
                   <div className="form-group">
