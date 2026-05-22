@@ -79,12 +79,12 @@ export default function ContactPage() {
       </section>
 
       <section style={{ padding: '60px 5% 80px' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 340px', gap: '60px', alignItems: 'start' }}>
+        <div className="page-form-layout">
 
           {/* Form */}
           <div>
             {stage === 'success' ? (
-              <div style={{ background: 'var(--cream)', borderRadius: '20px', padding: '60px 40px', textAlign: 'center' }}>
+              <div className="form-page-card" style={{ background: 'var(--cream)', borderRadius: '20px', textAlign: 'center' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '20px' }}>✿</div>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--text-dark)', marginBottom: '16px' }}>Message Received</h2>
                 <p style={{ color: 'var(--text-mid)', lineHeight: '1.75', marginBottom: '32px' }}>
@@ -98,7 +98,7 @@ export default function ContactPage() {
                 </div>
               </div>
             ) : (
-              <div style={{ background: 'var(--cream)', borderRadius: '20px', padding: '44px 40px', border: '1px solid var(--cream-dark)' }}>
+              <div className="form-page-card" style={{ background: 'var(--cream)', borderRadius: '20px', border: '1px solid var(--cream-dark)' }}>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--text-dark)', marginBottom: '28px' }}>Send an Enquiry</h2>
                 <form onSubmit={handleSubmit}>
                   {errorMsg && (
@@ -107,7 +107,7 @@ export default function ContactPage() {
                     </div>
                   )}
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-row-2">
                     <div className="form-group">
                       <label>Full Name *</label>
                       <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your name" />

@@ -178,7 +178,7 @@ export default function EventDetailPage() {
 
       {/* Content */}
       <section style={{ padding: '80px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 400px', gap: '60px', alignItems: 'start' }}>
+        <div className="page-form-layout">
 
           {/* Description */}
           <div>

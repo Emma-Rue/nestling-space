@@ -238,7 +238,7 @@ export default function BlogPostPage() {
         )}
 
         {/* Comment Form */}
-        <div style={{ background: 'var(--cream)', borderRadius: '16px', padding: '36px', border: '1px solid var(--cream-dark)' }}>
+        <div className="form-page-card" style={{ background: 'var(--cream)', borderRadius: '16px', border: '1px solid var(--cream-dark)' }}>
           <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', color: 'var(--text-dark)', marginBottom: '24px' }}>Leave a Comment</h3>
 
           {commentStage === 'success' ? (
@@ -254,7 +254,7 @@ export default function BlogPostPage() {
                   {commentError}
                 </div>
               )}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+              <div className="form-row-2" style={{ marginBottom: '16px' }}>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label>Name *</label>
                   <input type="text" value={cName} onChange={e => setCName(e.target.value)} required placeholder="Your name" />

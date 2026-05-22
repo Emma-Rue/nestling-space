@@ -79,12 +79,12 @@ export default function BookPage() {
       </section>
 
       <section style={{ padding: '20px 5% 80px' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 380px', gap: '60px', alignItems: 'start' }}>
+        <div className="page-form-layout">
 
           {/* Form */}
           <div>
             {stage === 'success' ? (
-              <div style={{ background: 'var(--white)', borderRadius: '20px', padding: '60px 40px', textAlign: 'center', boxShadow: 'var(--shadow-soft)' }}>
+              <div className="form-page-card" style={{ background: 'var(--white)', borderRadius: '20px', textAlign: 'center', boxShadow: 'var(--shadow-soft)' }}>
                 <div style={{ width: '72px', height: '72px', background: 'var(--sage-pale)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', fontSize: '2rem' }}>✓</div>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', color: 'var(--text-dark)', marginBottom: '16px' }}>Booking Request Sent!</h2>
                 <p style={{ color: 'var(--text-mid)', lineHeight: '1.75', marginBottom: '32px' }}>
@@ -95,7 +95,7 @@ export default function BookPage() {
                 </button>
               </div>
             ) : (
-              <div style={{ background: 'var(--white)', borderRadius: '20px', padding: '44px 40px', boxShadow: 'var(--shadow-soft)' }}>
+              <div className="form-page-card" style={{ background: 'var(--white)', borderRadius: '20px', boxShadow: 'var(--shadow-soft)' }}>
                 <form onSubmit={handleSubmit}>
                   {errorMsg && (
                     <div style={{ background: '#FEF2F2', color: '#991B1B', padding: '12px 16px', borderRadius: '8px', marginBottom: '24px', fontSize: '0.88rem' }}>
@@ -103,7 +103,7 @@ export default function BookPage() {
                     </div>
                   )}
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-row-2">
                     <div className="form-group">
                       <label>Full Name *</label>
                       <input type="text" value={name} onChange={e => setName(e.target.value)} required placeholder="Your full name" />
@@ -127,7 +127,7 @@ export default function BookPage() {
                     </select>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-row-2">
                     <div className="form-group">
                       <label>Preferred Date *</label>
                       <input type="date" value={preferredDate} onChange={e => setPreferredDate(e.target.value)} required min={new Date().toISOString().split('T')[0]} />

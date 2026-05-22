@@ -4,6 +4,17 @@
 :root {
   /* Surfaces */
   --white:          #fdf0ee;
+
+  /* Legacy form-page variables (used by /book, /contact, /events, /blog) */
+  --cream:          #FCF1EE;
+  --cream-dark:     #FDF3F0;
+  --blush:          #F6CFC2;
+  --beige:          #E5D9D2;
+  --text-dark:      #3A3028;
+  --text-mid:       #6B5E52;
+  --text-soft:      #9A8C82;
+  --shadow-soft:    0 4px 24px rgba(139,175,142,0.12);
+  --radius-md:      18px;
   --parchment:      #dce7da;
   --peach:          #fad4c5;
   --dark-1:         #647968;
@@ -20,6 +31,7 @@
   --sage:           #a1ba9b;
   --sage-dark:      #647968;
   --sage-light:     #dce7da;
+  --sage-pale:      #DFEAD6;
 
   /* Dividers */
   --divider:        #ead8cf;
@@ -941,6 +953,28 @@ nav#navbar {
   cursor: not-allowed;
 }
 
+/* Page layout: form column + sidebar column */
+.page-form-layout {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Two-column input row within a form */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Form card responsive padding */
+.form-page-card {
+  padding: 44px 40px;
+}
+
 .form-success {
   display: none;
   text-align: center;
@@ -1398,6 +1432,9 @@ footer {
   .testimonial-grid { grid-template-columns: 1fr; }
   .legal-tabs { gap: 0; }
   .page-hero { padding: 88px 18px 56px; }
+  .page-form-layout { grid-template-columns: 1fr; gap: 32px; }
+  .form-row-2 { grid-template-columns: 1fr; }
+  .form-page-card { padding: 28px 20px; }
 }
 
 @media (max-width: 480px) {
