@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa'
 
@@ -19,6 +19,12 @@ const SERVICES = [
   'Group Counselling Sessions',
 ]
 
+const TIME_SLOTS = [
+  'Morning (8am–12pm)',
+  'Afternoon (12pm–4pm)',
+  'Evening (4pm–7pm)',
+]
+
 type Stage = 'form' | 'loading' | 'success' | 'error'
 
 export default function BookPage() {
@@ -31,6 +37,40 @@ export default function BookPage() {
   const [notes, setNotes] = useState('')
   const [stage, setStage] = useState<Stage>('form')
   const [errorMsg, setErrorMsg] = useState('')
+  const [bookedTimes, setBookedTimes] = useState<string[]>([])
+  const [loadingAvailability, setLoadingAvailability] = useState(false)
+
+  useEffect(() => {
+    if (!preferredDate) {
+      const timer = setTimeout(() => setBookedTimes([]), 0)
+      return () => clearTimeout(timer)
+    }
+    
+    let active = true
+    const startTimer = setTimeout(() => {
+      if (active) setLoadingAvailability(true)
+    }, 0)
+
+    fetch(`/api/booking/availability?date=${preferredDate}`)
+      .then(res => res.json())
+      .then(data => {
+        if (active) {
+          setBookedTimes(data.bookedTimes ?? [])
+          setLoadingAvailability(false)
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setBookedTimes([])
+          setLoadingAvailability(false)
+        }
+      })
+
+    return () => {
+      active = false
+      clearTimeout(startTimer)
+    }
+  }, [preferredDate])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -134,11 +174,22 @@ export default function BookPage() {
                     </div>
                     <div className="form-group">
                       <label>Preferred Time *</label>
-                      <select value={preferredTime} onChange={e => setPreferredTime(e.target.value)} required style={{ width: '100%', padding: '14px 18px', border: '1.5px solid var(--cream-dark)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: '0.95rem', color: preferredTime ? 'var(--text-dark)' : 'var(--text-soft)', background: 'var(--white)', outline: 'none' }}>
-                        <option value="">Select time...</option>
-                        <option value="Morning (8am–12pm)">Morning (8am–12pm)</option>
-                        <option value="Afternoon (12pm–4pm)">Afternoon (12pm–4pm)</option>
-                        <option value="Evening (4pm–7pm)">Evening (4pm–7pm)</option>
+                      <select 
+                        value={preferredTime} 
+                        onChange={e => setPreferredTime(e.target.value)} 
+                        required 
+                        disabled={loadingAvailability || !preferredDate}
+                        style={{ width: '100%', padding: '14px 18px', border: '1.5px solid var(--cream-dark)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font-body)', fontSize: '0.95rem', color: preferredTime ? 'var(--text-dark)' : 'var(--text-soft)', background: 'var(--white)', outline: 'none' }}
+                      >
+                        <option value="">{loadingAvailability ? 'Checking availability...' : 'Select time...'}</option>
+                        {TIME_SLOTS.map(t => {
+                          const isBooked = bookedTimes.includes(t)
+                          return (
+                            <option key={t} value={t} disabled={isBooked}>
+                              {t} {isBooked ? '(Unavailable / Overlap)' : ''}
+                            </option>
+                          )
+                        })}
                       </select>
                     </div>
                   </div>
