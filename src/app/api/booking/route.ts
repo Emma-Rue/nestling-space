@@ -71,7 +71,11 @@ export async function POST(request: NextRequest) {
     })
 
     // 4. Send email notification
-    await sendBookingEmail({ name, email, phone, service, preferredDate, preferredTime, notes })
+    try {
+      await sendBookingEmail({ name, email, phone, service, preferredDate, preferredTime, notes })
+    } catch (emailErr) {
+      console.warn('Booking email notification failed, but booking was successfully saved in database:', emailErr)
+    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
