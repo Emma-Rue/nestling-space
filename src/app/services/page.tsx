@@ -1,9 +1,12 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "../components/MotionReveal";
+import { client } from "@/lib/sanity";
 
-const featuredServices = [
+const defaultFeaturedServices = [
   {
     image: "/Images/new/nestling (22).webp",
     alt: "Individual counselling session at Nestling Space",
@@ -34,46 +37,54 @@ const featuredServices = [
   },
 ];
 
-const fullServices = [
+const defaultFullServices = [
   {
     title: "Youth Counselling",
     description:
       "A safe and confidential space where young people can explore stress, anxiety, depression, trauma, grief, and personal struggles while building healthier coping strategies.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.09.mp4"
   },
   {
     title: "Inner Child Healing Therapy",
     description:
       "Guided support that helps identify unresolved childhood wounds, process past pain, and build healthier emotional patterns for the future.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.19.mp4"
   },
   {
     title: "Couples & Marriage Counselling",
     description:
       "Gentle, neutral support for partners to reconnect, improve communication, resolve conflict, rebuild trust, and create a safer, stronger relationship.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.31.mp4"
   },
   {
     title: "Family Counseling",
     description:
       "Support for families to listen, heal, and grow together while improving communication, parenting challenges, generational conflict, and family trauma.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.36.mp4"
   },
   {
     title: "Trauma & Emotional Healing",
     description:
       "Therapy for people who have experienced traumatic events, abuse, loss, or deep emotional wounds. Sessions focus on safe processing, emotional stability, and peace.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.42.mp4"
   },
   {
     title: "Stress, Anxiety & Burnout Support",
     description:
       "Practical techniques and therapeutic support for overwhelming stress, anxiety, and emotional exhaustion so clients can restore balance and resilience.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.34.54.mp4"
   },
   {
-    title: "Women&apos;s Emotional Wellness",
+    title: "Women's Emotional Wellness",
     description:
       "A supportive space for women navigating life transitions, relationship challenges, motherhood, identity struggles, emotional wounds, and personal growth.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.35.07.mp4"
   },
   {
     title: "Group Healing Sessions",
     description:
       "Facilitated small-group sessions where participants share experiences, gain support, and learn together around emotional healing, self-awareness, and relational health.",
+    videoUrl: "/videos/WhatsApp Video 2026-07-07 at 07.35.15.mp4"
   },
   {
     title: "Temperament & Personality Understanding",
@@ -129,6 +140,41 @@ const differentiators = [
 ];
 
 export default function ServicesPage() {
+  const [sanityData, setSanityData] = useState<any>(null);
+
+  useEffect(() => {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    if (!projectId) return;
+
+    client.fetch(`
+      *[_type == "servicesPage" && _id == "servicesPage"][0] {
+        ...,
+        servicesList[] {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        }
+      }
+    `, {}, { useCdn: false }).then((res) => {
+      if (res) setSanityData(res);
+    }).catch((err) => {
+      console.error("Error fetching services page content from Sanity:", err);
+    });
+  }, []);
+
+  // Header content overrides
+  const pageEyebrow = sanityData?.eyebrow ?? "Our Services";
+  const pageTitle = sanityData?.titleText ?? "What we offer";
+  const pageDescription = sanityData?.description ?? "Comprehensive counselling and training services designed for people, families, schools, churches, and workplaces.";
+
+  // Mapping dynamic services list
+  const fullServices = sanityData?.servicesList?.length > 0
+    ? sanityData.servicesList.map((s: any) => ({
+        title: s.title,
+        description: s.description,
+        videoUrl: s.videoFileUrl || s.videoUrl
+      }))
+    : defaultFullServices;
+
   return (
     <>
       {/* ======== PAGE HERO ======== */}
@@ -137,13 +183,10 @@ export default function ServicesPage() {
           className="eyebrow"
           style={{ color: "var(--sage-light)", marginBottom: "12px" }}
         >
-          Our Services
+          {pageEyebrow}
         </span>
-        <h1>What we offer</h1>
-        <p>
-          Comprehensive counselling and training services designed for people,
-          families, schools, churches, and workplaces.
-        </p>
+        <h1>{pageTitle}</h1>
+        <p>{pageDescription}</p>
       </div>
 
       {/* ======== FEATURED SERVICES ======== */}
@@ -159,7 +202,7 @@ export default function ServicesPage() {
             </h2>
           </Reveal>
           <div className="grid-4">
-            {featuredServices.map((service, index) => (
+            {defaultFeaturedServices.map((service, index) => (
               <Reveal
                 className="service-card"
                 variant="scaleUp"
@@ -173,7 +216,7 @@ export default function ServicesPage() {
                   width={640}
                   height={320}
                   sizes="(max-width: 768px) 100vw, 25vw"
-                  style={{ width: "100%", height: "180px", objectFit: "cover" }}
+                  style={{ width: "100%", height: "180px", objectFit: "cover", objectPosition: "top" }}
                 />
                 <div className="service-card-body">
                   <h3 className="card-title">{service.title}</h3>
@@ -185,7 +228,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      {/* ======== ALL SERVICES ======== */}
+      {/* ======== ALL SERVICES WITH VIDEOS ======== */}
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
           <Reveal className="section-header" variant="fade" amount={0.25}>
@@ -201,23 +244,36 @@ export default function ServicesPage() {
               style={{ color: "var(--ink-secondary)", maxWidth: "600px" }}
             >
               Explore the full range of care we offer across personal healing, relationships,
-              family systems, and group growth.
+              family systems, and group growth. Play the clip next to each service to learn more.
             </p>
           </Reveal>
 
           <div className="grid-3">
-            {fullServices.map((service, index) => (
+            {fullServices.map((service: any, index: number) => (
               <Reveal
                 className="utility-card"
                 variant="scaleUp"
                 delay={(index % 3) * 0.08}
                 amount={0.2}
                 key={service.title}
+                style={{ display: "flex", flexDirection: "column", justifyContent: "between" }}
               >
-                <h3>
-                  {index + 1}. {service.title}
-                </h3>
-                <p>{service.description}</p>
+                <div>
+                  <h3>
+                    {index + 1}. {service.title}
+                  </h3>
+                  <p>{service.description}</p>
+                </div>
+                {service.videoUrl && (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ width: "100%", height: "auto", aspectRatio: "16/9", objectFit: "contain", background: "#000", borderRadius: "10px", marginTop: "16px" }}
+                  >
+                    <source src={service.videoUrl} type="video/mp4" />
+                  </video>
+                )}
               </Reveal>
             ))}
           </div>

@@ -8,6 +8,7 @@ export default defineConfig({
   title: 'Nestling Space',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
+  basePath: '/studio',
   plugins: [
     structureTool({
       structure: (S) =>
@@ -22,9 +23,17 @@ export default defineConfig({
                   .schemaType('homePage')
                   .documentId('homePage')
               ),
+            S.listItem()
+              .title('Services Page Content')
+              .id('servicesPage')
+              .child(
+                S.document()
+                  .schemaType('servicesPage')
+                  .documentId('servicesPage')
+              ),
             S.divider(),
             ...S.documentTypeListItems().filter(
-              (item) => item.getId() !== 'homePage'
+              (item) => !['homePage', 'servicesPage'].includes(item.getId() ?? '')
             ),
           ]),
     }),
@@ -33,6 +42,6 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (templates) =>
-      templates.filter((template) => template.id !== 'homePage'),
+      templates.filter((template) => !['homePage', 'servicesPage'].includes(template.id)),
   },
 })

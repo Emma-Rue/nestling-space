@@ -132,7 +132,7 @@ export default function Home() {
           "videoFileUrl": videoFile.asset->url
         }
       }
-    `).then((res) => {
+    `, {}, { useCdn: false }).then((res) => {
       if (res) setSanityData(res);
     }).catch((err) => {
       console.error("Error fetching homepage content from Sanity:", err);
@@ -315,7 +315,7 @@ export default function Home() {
                   fill
                   quality={100}
                   sizes="(max-width: 900px) 100vw, 100vw"
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "cover", objectPosition: "top" }}
                 />
               )}
             </Reveal>
@@ -392,7 +392,7 @@ export default function Home() {
                         playsInline
                         preload="metadata"
                         poster={typeof poster === 'string' ? poster : (poster ? urlFor(poster).url() : undefined)}
-                        style={{ width: "100%", height: "320px", objectFit: "cover" }}
+                        style={{ width: "100%", height: "auto", aspectRatio: "16/9", objectFit: "contain", background: "#000" }}
                       >
                         <source src={videoUrl} />
                       </video>
@@ -457,7 +457,7 @@ export default function Home() {
                     width={640}
                     height={320}
                     sizes="(max-width: 768px) 100vw, 25vw"
-                    style={{ width: "100%", height: "180px", objectFit: "cover" }}
+                    style={{ width: "100%", height: "180px", objectFit: "cover", objectPosition: "top" }}
                   />
                 )}
                 <div className="service-card-body">
