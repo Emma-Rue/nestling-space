@@ -169,16 +169,16 @@ export default function Home() {
   const videoFeatureDesc = sanityData?.videoFeature?.description ?? "Short clips from Dr. Mugabe and the Nestling Space environment, now served from the public folder.";
   const featuredVideos = sanityData?.videoFeature?.videos?.length > 0 ? sanityData.videoFeature.videos : [
     {
-      title: "Founder Clip",
-      description: "A short introduction from Dr. Mugabe about the heart behind the practice.",
-      posterUrl: "/Images/new/nestling (2).webp",
-      videoFileUrl: "/videos/dr-m-mugabe.mp4"
+      title: "Couples & Marriage Counselling",
+      description: "Neutral support for partners to reconnect, improve communication, and rebuild trust.",
+      posterUrl: "/Images/new/nestling (10).webp",
+      videoFileUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.31.mp4"
     },
     {
-      title: "Practice Walkthrough",
-      description: "A visual look at the calm, private space clients step into.",
-      posterUrl: "/Images/new/nestling (20).webp",
-      videoFileUrl: "/videos/dr-mugabe.mp4"
+      title: "Youth Counselling",
+      description: "A safe, confidential space for young people to navigate stress and personal struggles.",
+      posterUrl: "/Images/new/nestling (22).webp",
+      videoFileUrl: "/videos/WhatsApp Video 2026-07-07 at 07.31.09.mp4"
     }
   ];
 
