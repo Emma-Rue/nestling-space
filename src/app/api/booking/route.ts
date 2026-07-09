@@ -11,6 +11,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
+    const todayStr = new Date().toISOString().split('T')[0]
+    if (preferredDate <= todayStr) {
+      return NextResponse.json(
+        { error: 'Appointments must be booked at least one day in advance.' },
+        { status: 400 }
+      )
+    }
+
     // 1. Check for double bookings (collisions) in Sanity
     const collisionQuery = `*[_type == "booking" && preferredDate == $preferredDate && preferredTime == $preferredTime && status in ["pending", "confirmed"]][0]`
     const collision = await writeClient.fetch(collisionQuery, { preferredDate, preferredTime })

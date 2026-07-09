@@ -170,7 +170,17 @@ export default function BookPage() {
                   <div className="form-row-2">
                     <div className="form-group">
                       <label>Preferred Date *</label>
-                      <input type="date" value={preferredDate} onChange={e => setPreferredDate(e.target.value)} required min={new Date().toISOString().split('T')[0]} />
+                      <input 
+                        type="date" 
+                        value={preferredDate} 
+                        onChange={e => setPreferredDate(e.target.value)} 
+                        required 
+                        min={(() => {
+                          const tom = new Date()
+                          tom.setDate(tom.getDate() + 1)
+                          return tom.toISOString().split('T')[0]
+                        })()} 
+                      />
                     </div>
                     <div className="form-group">
                       <label>Preferred Time *</label>
