@@ -13,7 +13,7 @@ export default function Footer() {
           </p>
           <div className="footer-social">
             <a
-              href="https://www.instagram.com/nestlingspace"
+              href="https://www.instagram.com/nestling_safe_space"
               target="_blank"
               rel="noreferrer"
               className="social-btn"

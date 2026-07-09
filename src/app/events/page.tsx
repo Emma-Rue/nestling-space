@@ -260,7 +260,7 @@ export default function EventsPage() {
           <a href="https://wa.me/263773214886" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', background: '#25D366', color: '#fff', padding: '14px 28px', borderRadius: '50px', fontWeight: '700', textDecoration: 'none', fontSize: '0.9rem', gap: '8px', alignItems: 'center' }}>
             <FaWhatsapp /> Follow on WhatsApp
           </a>
-          <a href="https://www.instagram.com/nestlingspace" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', background: 'transparent', color: '#fff', padding: '14px 28px', borderRadius: '50px', fontWeight: '700', textDecoration: 'none', fontSize: '0.9rem', border: '1.5px solid rgba(255,255,255,0.4)' }}>
+          <a href="https://www.instagram.com/nestling_safe_space" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', background: 'transparent', color: '#fff', padding: '14px 28px', borderRadius: '50px', fontWeight: '700', textDecoration: 'none', fontSize: '0.9rem', border: '1.5px solid rgba(255,255,255,0.4)' }}>
             <FaInstagram style={{ marginRight: '8px' }} /> Instagram
           </a>
         </div>

@@ -166,9 +166,9 @@ export default function ContactPage() {
             <div style={{ background: 'var(--cream)', borderRadius: '20px', padding: '32px', border: '1px solid var(--cream-dark)' }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.15rem', color: 'var(--text-dark)', marginBottom: '20px' }}>Follow Us</h3>
               <div style={{ display: 'grid', gap: '10px' }}>
-                <a href="https://www.instagram.com/nestlingspace" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', background: 'var(--white)', borderRadius: '10px', textDecoration: 'none', color: 'var(--text-mid)', fontSize: '0.88rem', border: '1px solid var(--cream-dark)' }}>
+                <a href="https://www.instagram.com/nestling_safe_space" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', background: 'var(--white)', borderRadius: '10px', textDecoration: 'none', color: 'var(--text-mid)', fontSize: '0.88rem', border: '1px solid var(--cream-dark)' }}>
                   <FaInstagram style={{ color: '#E1306C', fontSize: '1.1rem' }} />
-                  @nestlingspace
+                  @nestling_safe_space
                 </a>
                 <a href="https://www.facebook.com/profile.php?id=61580743690158" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', background: 'var(--white)', borderRadius: '10px', textDecoration: 'none', color: 'var(--text-mid)', fontSize: '0.88rem', border: '1px solid var(--cream-dark)' }}>
                   <FaFacebook style={{ color: '#1877F2', fontSize: '1.1rem' }} />
