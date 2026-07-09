@@ -1,9 +1,12 @@
-﻿"use client";
+"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal, RevealSpan } from "./components/MotionReveal";
+import { client, urlFor } from "@/lib/sanity";
 
-const featuredServices = [
+const defaultServices = [
   {
     image: "/Images/new/nestling (22).webp",
     alt: "Individual counselling session at Nestling Space",
@@ -34,7 +37,7 @@ const featuredServices = [
   },
 ];
 
-const testimonials = [
+const defaultTestimonials = [
   {
     quote:
       "Ndainzwa kurasika uye kushungurudzika... Nestling Space yakandibatsira kupora uye kudzoka kuziva kukosha kwangu nekukwanisa kuyanana nevabereki vangu.",
@@ -67,7 +70,7 @@ const testimonials = [
   },
 ];
 
-const tickerItems = [
+const defaultTickerItems = [
   'Evidence-Based Care',
   'Culturally Sensitive',
   'Online & In-Person',
@@ -77,47 +80,206 @@ const tickerItems = [
 ];
 
 export default function Home() {
+  const [sanityData, setSanityData] = useState<any>(null);
+
+  useEffect(() => {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    if (!projectId) return;
+
+    client.fetch(`
+      *[_type == "homePage" && _id == "homePage"][0] {
+        ...,
+        hero {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        },
+        aboutPreview {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        },
+        videoFeature {
+          ...,
+          videos[] {
+            ...,
+            "videoFileUrl": videoFile.asset->url,
+            "posterUrl": posterImage.asset->url
+          }
+        },
+        servicesPreview {
+          ...,
+          services[] {
+            ...,
+            "videoFileUrl": videoFile.asset->url
+          }
+        },
+        gallery {
+          ...,
+          images[] {
+            ...,
+            "videoFileUrl": videoFile.asset->url
+          }
+        },
+        quote {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        },
+        eventsPreview {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        },
+        blogPreview {
+          ...,
+          "videoFileUrl": videoFile.asset->url
+        }
+      }
+    `).then((res) => {
+      if (res) setSanityData(res);
+    }).catch((err) => {
+      console.error("Error fetching homepage content from Sanity:", err);
+    });
+  }, []);
+
+  // Hero Fallbacks
+  const heroEyebrow = sanityData?.hero?.eyebrow ?? "Mental Wellness";
+  const heroLine1 = sanityData?.hero?.titleLine1 ?? "A Safe Place";
+  const heroLine2 = sanityData?.hero?.titleLine2 ?? "To Heal.";
+  const heroSubtext = sanityData?.hero?.subtext ?? "Welcome to The Nestling Space, a gentle home for your healing and growth. Here, you are seen, heard, and supported as you untangle life's worries, build emotional strength, and move toward clarity, peace, and purpose.";
+  const heroPrimaryBtnText = sanityData?.hero?.primaryBtnText ?? "Book a Session";
+  const heroPrimaryBtnLink = sanityData?.hero?.primaryBtnLink ?? "/book";
+  const heroSecondaryBtnText = sanityData?.hero?.secondaryBtnText ?? "Our Services";
+  const heroSecondaryBtnLink = sanityData?.hero?.secondaryBtnLink ?? "/services";
+  const heroTrustItems = sanityData?.hero?.trustItems ?? ['Evidence-Based Care', 'Culturally Sensitive', 'Online & In-Person', 'Confidential'];
+
+  // Ticker Fallbacks
+  const tickerItems = sanityData?.ticker?.items ?? defaultTickerItems;
+
+  // About Fallbacks
+  const aboutEyebrow = sanityData?.aboutPreview?.eyebrow ?? "Who We Are";
+  const aboutTitle = sanityData?.aboutPreview?.title ?? "Who we are";
+  const aboutParagraph1 = sanityData?.aboutPreview?.paragraph1 ?? "The Nestling Space was founded from a rare blend of clinical science, public health, teaching, and hands-on counselling experience. Over a decade of working with students, families, and communities shaped a clear calling: provide culturally sensitive mental health support that helps break cycles of pain and restore resilience.";
+  const aboutParagraph2 = sanityData?.aboutPreview?.paragraph2 ?? "The practice was formalised after the COVID-19 pandemic made the psychological cost of isolation, fear, and grief impossible to ignore. We bring therapeutic care, prevention, education, and community understanding together under one roof.";
+  const aboutLinkText = sanityData?.aboutPreview?.linkText ?? "Meet Dr. Mugabe →";
+  const aboutLinkUrl = sanityData?.aboutPreview?.linkUrl ?? "/about";
+  const aboutPhoto = sanityData?.aboutPreview?.image ? urlFor(sanityData.aboutPreview.image).url() : "/Images/new/old-pics (1).webp";
+  const aboutVideoUrl = sanityData?.aboutPreview?.videoFileUrl || sanityData?.aboutPreview?.videoUrl;
+
+  // Video Feature Fallbacks
+  const videoFeatureEyebrow = sanityData?.videoFeature?.eyebrow ?? "In Their Words";
+  const videoFeatureTitle = sanityData?.videoFeature?.title ?? "Watch the practice in motion";
+  const videoFeatureDesc = sanityData?.videoFeature?.description ?? "Short clips from Dr. Mugabe and the Nestling Space environment, now served from the public folder.";
+  const featuredVideos = sanityData?.videoFeature?.videos?.length > 0 ? sanityData.videoFeature.videos : [
+    {
+      title: "Founder Clip",
+      description: "A short introduction from Dr. Mugabe about the heart behind the practice.",
+      posterUrl: "/Images/new/nestling (2).webp",
+      videoFileUrl: "/videos/dr-m-mugabe.mp4"
+    },
+    {
+      title: "Practice Walkthrough",
+      description: "A visual look at the calm, private space clients step into.",
+      posterUrl: "/Images/new/nestling (20).webp",
+      videoFileUrl: "/videos/dr-mugabe.mp4"
+    }
+  ];
+
+  // Services Preview Fallbacks
+  const servicesEyebrow = sanityData?.servicesPreview?.eyebrow ?? "What We Offer";
+  const servicesTitle = sanityData?.servicesPreview?.title ?? "What we offer";
+  const servicesDesc = sanityData?.servicesPreview?.description ?? "Comprehensive counselling for individuals, couples, families, and organisations navigating real emotional and relational pressures.";
+  const servicesList = sanityData?.servicesPreview?.services?.length > 0
+    ? sanityData.servicesPreview.services.map((s: any) => ({
+        image: s.image ? urlFor(s.image).url() : "/Images/new/nestling (22).webp",
+        alt: s.title,
+        title: s.title,
+        description: s.description,
+        videoUrl: s.videoFileUrl || s.videoUrl
+      }))
+    : defaultServices;
+
+  // Gallery Fallbacks
+  const galleryEyebrow = sanityData?.gallery?.eyebrow ?? "Our Practice";
+  const galleryTitle = sanityData?.gallery?.title ?? "Healing in action";
+  const galleryDesc = sanityData?.gallery?.description ?? "Real sessions, real spaces, real people — a glimpse into the warmth and care at The Nestling Space.";
+  
+  const galleryItems = sanityData?.gallery?.images?.length > 0
+    ? sanityData.gallery.images.map((img: any) => ({
+        src: img.image ? urlFor(img.image).url() : "/Images/new/nestling (10).webp",
+        alt: img.alt || "Gallery image",
+        videoUrl: img.videoFileUrl || img.videoUrl
+      }))
+    : [
+        { src: "/Images/new/nestling (10).webp", alt: "Couples conversation at Nestling Space" },
+        { src: "/Images/new/nestling (18).webp", alt: "Individual counselling with an adult client" },
+        { src: "/Images/new/nestling (14).webp", alt: "Dr Mugabe in a counselling session" },
+        { src: "/Images/new/nestling (1).webp", alt: "Dr Mugabe, founder of Nestling Space, in the garden" },
+        { src: "/Images/new/nestling (17).webp", alt: "Outdoor counselling session at Nestling Space" },
+        { src: "/Images/new/nestling (15).webp", alt: "Workshop session with multiple participants" }
+      ];
+
+  // Divide galleryItems into two rows (standard 3 per row)
+  const galleryRow1 = galleryItems.slice(0, 3);
+  const galleryRow2 = galleryItems.slice(3, 6);
+
+  // Quote Fallbacks
+  const quoteText = sanityData?.quote?.text ?? "“Your mind. Your health. Your worth.”";
+  const quoteAuthor = sanityData?.quote?.author ?? "You are not alone. You are welcome here.";
+  const quoteBtnText = sanityData?.quote?.btnText ?? "Take the first step";
+  const quoteBtnLink = sanityData?.quote?.btnLink ?? "/book";
+
+  // Events Fallbacks
+  const eventsEyebrow = sanityData?.eventsPreview?.eyebrow ?? "Events & Webinars";
+  const eventsTitle = sanityData?.eventsPreview?.title ?? "Upcoming Events & Webinars";
+  const eventsDesc = sanityData?.eventsPreview?.description ?? "Workshops, training sessions, and group events open to the public.";
+
+  // Testimonials Fallbacks
+  const testimonialsEyebrow = sanityData?.testimonialsSection?.eyebrow ?? "Stories of Healing";
+  const testimonialsTitle = sanityData?.testimonialsSection?.title ?? "What our clients say";
+  const testimonialsDesc = sanityData?.testimonialsSection?.description ?? "Discover how The Nestling Space with Dr. M. Mugabe has positively impacted the lives of our clients.";
+  const testimonialsList = sanityData?.testimonialsSection?.testimonials?.length > 0 ? sanityData.testimonialsSection.testimonials : defaultTestimonials;
+
+  // Blog Fallbacks
+  const blogEyebrow = sanityData?.blogPreview?.eyebrow ?? "Feedback";
+  const blogTitle = sanityData?.blogPreview?.title ?? "Share your feedback";
+  const blogDesc = sanityData?.blogPreview?.description ?? "Use the contact page to send us your thoughts, comments, or suggestions.";
+
   return (
     <>
       {/* ======== HERO ======== */}
       <section id="hero">
         <Reveal className="hero-content" variant="fade" amount={0.55} delay={1.25}>
           <RevealSpan className="hero-eyebrow" variant="fade" delay={1.33}>
-            Mental Wellness
+            {heroEyebrow}
           </RevealSpan>
           <div className="hero-split">
             <div className="hero-line-wrap">
               <RevealSpan className="hero-line-inner" variant="blurUp" delay={1.42}>
-                A Safe Place
+                {heroLine1}
               </RevealSpan>
             </div>
             <div className="hero-line-wrap">
               <RevealSpan className="hero-line-inner line-2" variant="blurUp" delay={1.54}>
-                To Heal.
+                {heroLine2}
               </RevealSpan>
             </div>
           </div>
           <Reveal className="hero-subtext" variant="fade" delay={1.62}>
-            Welcome to The Nestling Space, a gentle home for your healing and growth.
-            Here, you are seen, heard, and supported as you untangle life&apos;s worries,
-            build emotional strength, and move toward clarity, peace, and purpose.
+            {heroSubtext}
           </Reveal>
           <Reveal className="hero-actions" variant="fade" delay={1.72}>
-            <Link href="/book" className="btn-dark-primary">
-              Book a Session
+            <Link href={heroPrimaryBtnLink} className="btn-dark-primary">
+              {heroPrimaryBtnText}
             </Link>
-            <Link href="/services" className="btn-dark-secondary">
-              Our Services
+            <Link href={heroSecondaryBtnLink} className="btn-dark-secondary">
+              {heroSecondaryBtnText}
             </Link>
           </Reveal>
           <Reveal className="hero-trust" variant="fade" delay={1.82}>
-            <span className="hero-trust-item">Evidence-Based Care</span>
-            <span className="hero-trust-dot"></span>
-            <span className="hero-trust-item">Culturally Sensitive</span>
-            <span className="hero-trust-dot"></span>
-            <span className="hero-trust-item">Online &amp; In-Person</span>
-            <span className="hero-trust-dot"></span>
-            <span className="hero-trust-item">Confidential</span>
+            {heroTrustItems.map((item: string, idx: number) => (
+              <span key={item}>
+                <span className="hero-trust-item">{item}</span>
+                {idx < heroTrustItems.length - 1 && <span className="hero-trust-dot"></span>}
+              </span>
+            ))}
           </Reveal>
         </Reveal>
       </section>
@@ -137,31 +299,37 @@ export default function Home() {
         <div className="tile-inner">
           <div className="about-preview-grid">
             <Reveal className="about-preview-photo photo-shadow" variant="slideLeft" amount={0.3}>
-              <Image
-                src="/Images/new/old-pics (1).webp"
-                alt="Dr Mugabe, founder of The Nestling Space"
-                fill
-                quality={100}
-                sizes="(max-width: 900px) 100vw, 100vw"
-                style={{ objectFit: "cover" }}
-              />
+              {aboutVideoUrl ? (
+                <video
+                  controls
+                  playsInline
+                  preload="metadata"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", inset: 0 }}
+                >
+                  <source src={aboutVideoUrl} />
+                </video>
+              ) : (
+                <Image
+                  src={aboutPhoto}
+                  alt={aboutTitle}
+                  fill
+                  quality={100}
+                  sizes="(max-width: 900px) 100vw, 100vw"
+                  style={{ objectFit: "cover" }}
+                />
+              )}
             </Reveal>
             <Reveal variant="slideRight" delay={0.12} amount={0.3}>
               <div className="section-header">
-                <span className="eyebrow section-eyebrow">Who We Are</span>
+                <span className="eyebrow section-eyebrow">{aboutEyebrow}</span>
                 <h2
                   className="display-large"
                   style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "20px" }}
                 >
-                  Who we are
+                  {aboutTitle}
                 </h2>
                 <p className="body-text" style={{ color: "var(--ink-secondary)" }}>
-                  The Nestling Space was founded from a rare blend of clinical
-                  science, public health, teaching, and hands-on counselling
-                  experience. Over a decade of working with students, families,
-                  and communities shaped a clear calling: provide culturally
-                  sensitive mental health support that helps break cycles of
-                  pain and restore resilience.
+                  {aboutParagraph1}
                 </p>
                 <p
                   className="body-text"
@@ -171,13 +339,10 @@ export default function Home() {
                     marginBottom: "28px",
                   }}
                 >
-                  The practice was formalised after the COVID-19 pandemic made
-                  the psychological cost of isolation, fear, and grief impossible
-                  to ignore. We bring therapeutic care, prevention, education,
-                  and community understanding together under one roof.
+                  {aboutParagraph2}
                 </p>
-                <Link href="/about" className="link-sage">
-                  Meet Dr. Mugabe →
+                <Link href={aboutLinkUrl} className="link-sage">
+                  {aboutLinkText}
                 </Link>
               </div>
             </Reveal>
@@ -190,82 +355,60 @@ export default function Home() {
         <div className="tile-inner-wide">
           <Reveal className="section-header centered" variant="fade" amount={0.25}>
             <span className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)" }}>
-              In Their Words
+              {videoFeatureEyebrow}
             </span>
             <h2
               className="display-large"
               style={{ color: "rgba(255,255,255,0.94)", marginTop: "8px", marginBottom: "12px" }}
             >
-              Watch the practice in motion
+              {videoFeatureTitle}
             </h2>
             <p
               className="body-text"
               style={{ color: "rgba(255,255,255,0.62)", maxWidth: "620px", margin: "0 auto" }}
             >
-              Short clips from Dr. Mugabe and the Nestling Space environment, now served from the public folder.
+              {videoFeatureDesc}
             </p>
           </Reveal>
 
           <div className="grid-2" style={{ marginTop: "40px" }}>
-            <Reveal variant="slideLeft" amount={0.2}>
-              <div
-                style={{
-                  borderRadius: "22px",
-                  overflow: "hidden",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "var(--shadow-product)",
-                }}
-              >
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
-                  poster="/Images/new/nestling (2).webp"
-                  style={{ width: "100%", height: "320px", objectFit: "cover" }}
-                >
-                  <source src="/videos/dr-m-mugabe.mp4" type="video/mp4" />
-                </video>
-                <div style={{ padding: "18px 20px 22px" }}>
-                  <div className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)", marginBottom: "10px" }}>
-                    Founder Clip
+            {featuredVideos.map((video: any, index: number) => {
+              const videoUrl = video.videoFileUrl || video.videoUrl;
+              const poster = video.posterUrl || video.posterImage;
+              return (
+                <Reveal key={video.title || index} variant={index % 2 === 0 ? "slideLeft" : "slideRight"} delay={index % 2 !== 0 ? 0.08 : 0} amount={0.2}>
+                  <div
+                    style={{
+                      borderRadius: "22px",
+                      overflow: "hidden",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      boxShadow: "var(--shadow-product)",
+                    }}
+                  >
+                    {videoUrl && (
+                      <video
+                        controls
+                        playsInline
+                        preload="metadata"
+                        poster={typeof poster === 'string' ? poster : (poster ? urlFor(poster).url() : undefined)}
+                        style={{ width: "100%", height: "320px", objectFit: "cover" }}
+                      >
+                        <source src={videoUrl} />
+                      </video>
+                    )}
+                    <div style={{ padding: "18px 20px 22px" }}>
+                      <div className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)", marginBottom: "10px" }}>
+                        {video.title}
+                      </div>
+                      <p className="body-text" style={{ color: "rgba(255,255,255,0.72)" }}>
+                        {video.description}
+                      </p>
+                    </div>
                   </div>
-                  <p className="body-text" style={{ color: "rgba(255,255,255,0.72)" }}>
-                    A short introduction from Dr. Mugabe about the heart behind the practice.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal variant="slideRight" delay={0.08} amount={0.2}>
-              <div
-                style={{
-                  borderRadius: "22px",
-                  overflow: "hidden",
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  boxShadow: "var(--shadow-product)",
-                }}
-              >
-                <video
-                  controls
-                  playsInline
-                  preload="metadata"
-                  poster="/Images/new/nestling (20).webp"
-                  style={{ width: "100%", height: "320px", objectFit: "cover" }}
-                >
-                  <source src="/videos/dr-mugabe.mp4" type="video/mp4" />
-                </video>
-                <div style={{ padding: "18px 20px 22px" }}>
-                  <div className="eyebrow section-eyebrow" style={{ color: "var(--sage-light)", marginBottom: "10px" }}>
-                    Practice Walkthrough
-                  </div>
-                  <p className="body-text" style={{ color: "rgba(255,255,255,0.72)" }}>
-                    A visual look at the calm, private space clients step into.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -274,24 +417,23 @@ export default function Home() {
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
           <Reveal className="section-header centered" variant="fade" amount={0.25}>
-            <span className="eyebrow section-eyebrow">What We Offer</span>
+            <span className="eyebrow section-eyebrow">{servicesEyebrow}</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              What we offer
+              {servicesTitle}
             </h2>
             <p
               className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "560px", margin: "0 auto" }}
             >
-              Comprehensive counselling for individuals, couples, families, and
-              organisations navigating real emotional and relational pressures.
+              {servicesDesc}
             </p>
           </Reveal>
 
           <div className="grid-4">
-            {featuredServices.map((service, index) => (
+            {servicesList.map((service: any, index: number) => (
               <Reveal
                 className="service-card"
                 variant="scaleUp"
@@ -299,14 +441,25 @@ export default function Home() {
                 amount={0.2}
                 key={service.title}
               >
-                <Image
-                  src={service.image}
-                  alt={service.alt}
-                  width={640}
-                  height={320}
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                  style={{ width: "100%", height: "180px", objectFit: "cover" }}
-                />
+                {service.videoUrl ? (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ width: "100%", height: "180px", objectFit: "cover" }}
+                  >
+                    <source src={service.videoUrl} />
+                  </video>
+                ) : (
+                  <Image
+                    src={service.image}
+                    alt={service.alt || service.title}
+                    width={640}
+                    height={320}
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    style={{ width: "100%", height: "180px", objectFit: "cover" }}
+                  />
+                )}
                 <div className="service-card-body">
                   <h3 className="card-title">{service.title}</h3>
                   <p className="card-desc">{service.description}</p>
@@ -327,71 +480,67 @@ export default function Home() {
       <div className="tile tile-white">
         <div className="tile-inner-wide">
           <Reveal className="section-header centered" variant="fade" amount={0.25}>
-            <span className="eyebrow section-eyebrow">Our Practice</span>
+            <span className="eyebrow section-eyebrow">{galleryEyebrow}</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              Healing in action
+              {galleryTitle}
             </h2>
             <p
               className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "520px", margin: "0 auto" }}
             >
-              Real sessions, real spaces, real people — a glimpse into the warmth and care at The Nestling Space.
+              {galleryDesc}
             </p>
           </Reveal>
           <Reveal className="gallery-grid" style={{ marginTop: "40px" }} variant="blurUp" amount={0.2}>
-            <Image
-              src="/Images/new/nestling (10).webp"
-              alt="Couples conversation at Nestling Space"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (18).webp"
-              alt="Individual counselling with an adult client"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (14).webp"
-              alt="Dr Mugabe in a counselling session"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
-            />
+            {galleryRow1.map((item: any, idx: number) => (
+              <div key={idx} style={{ position: "relative", width: "100%", height: "280px", borderRadius: "14px", overflow: "hidden" }}>
+                {item.videoUrl ? (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ width: "100%", height: "280px", objectFit: "cover" }}
+                  >
+                    <source src={item.videoUrl} />
+                  </video>
+                ) : (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </div>
+            ))}
           </Reveal>
           <Reveal className="gallery-grid" style={{ marginTop: "12px" }} variant="blurUp" amount={0.2} delay={0.08}>
-            <Image
-              src="/Images/new/nestling (1).webp"
-              alt="Dr Mugabe, founder of Nestling Space, in the garden"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", objectPosition: "top", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (17).webp"
-              alt="Outdoor counselling session at Nestling Space"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
-            />
-            <Image
-              src="/Images/new/nestling (15).webp"
-              alt="Workshop session with multiple participants"
-              width={700}
-              height={560}
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ width: "100%", height: "280px", objectFit: "cover", borderRadius: "14px" }}
-            />
+            {galleryRow2.map((item: any, idx: number) => (
+              <div key={idx} style={{ position: "relative", width: "100%", height: "280px", borderRadius: "14px", overflow: "hidden" }}>
+                {item.videoUrl ? (
+                  <video
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ width: "100%", height: "280px", objectFit: "cover" }}
+                  >
+                    <source src={item.videoUrl} />
+                  </video>
+                ) : (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </div>
+            ))}
           </Reveal>
         </div>
       </div>
@@ -413,7 +562,7 @@ export default function Home() {
                 margin: "0 auto 20px",
               }}
             >
-              &ldquo;Your mind. Your health. Your worth.&rdquo;
+              {quoteText}
             </h2>
             <p
               className="body-text"
@@ -423,10 +572,10 @@ export default function Home() {
                 marginTop: "20px",
               }}
             >
-              You are not alone. You are welcome here.
+              {quoteAuthor}
             </p>
-            <Link href="/book" className="btn-dark-primary">
-              Take the first step
+            <Link href={quoteBtnLink} className="btn-dark-primary">
+              {quoteBtnText}
             </Link>
           </Reveal>
         </div>
@@ -436,15 +585,15 @@ export default function Home() {
       <div className="tile tile-white">
         <div className="tile-inner">
           <Reveal className="section-header" variant="fade" amount={0.25}>
-            <span className="eyebrow section-eyebrow">Events &amp; Webinars</span>
+            <span className="eyebrow section-eyebrow">{eventsEyebrow}</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              Upcoming Events &amp; Webinars
+              {eventsTitle}
             </h2>
             <p className="body-text" style={{ color: "var(--ink-secondary)" }}>
-              Workshops, training sessions, and group events open to the public.
+              {eventsDesc}
             </p>
           </Reveal>
 
@@ -495,18 +644,18 @@ export default function Home() {
       <div className="tile tile-parchment">
         <div className="tile-inner-wide">
           <Reveal className="section-header" variant="fade" amount={0.25}>
-            <span className="eyebrow section-eyebrow">Stories of Healing</span>
+            <span className="eyebrow section-eyebrow">{testimonialsEyebrow}</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px" }}
             >
-              What our clients say
+              {testimonialsTitle}
             </h2>
             <p
               className="body-text"
               style={{ color: "var(--ink-secondary)", maxWidth: "560px", marginTop: "12px" }}
             >
-              Discover how The Nestling Space with Dr. M. Mugabe has positively impacted the lives of our clients.
+              {testimonialsDesc}
             </p>
           </Reveal>
 
@@ -517,14 +666,14 @@ export default function Home() {
                 <span className="testimonial-badge">Client voice</span>
               </div>
               <p className="testimonial-quote testimonial-quote-large">
-                &ldquo;{testimonials[0].quote}&rdquo;
+                &ldquo;{testimonialsList[0].quote}&rdquo;
               </p>
-              <div className="testimonial-author">{testimonials[0].author}</div>
-              <div className="testimonial-label">{testimonials[0].label}</div>
+              <div className="testimonial-author">{testimonialsList[0].author}</div>
+              <div className="testimonial-label">{testimonialsList[0].label}</div>
             </Reveal>
 
             <div className="testimonial-grid">
-              {testimonials.slice(1).map((t, index) => (
+              {testimonialsList.slice(1).map((t: any, index: number) => (
                 <Reveal
                   className="testimonial-card"
                   variant="blurUp"
@@ -546,15 +695,15 @@ export default function Home() {
       <div className="tile tile-white">
         <div className="tile-inner">
           <Reveal className="section-header" variant="fade" amount={0.25}>
-            <span className="eyebrow section-eyebrow">Feedback</span>
+            <span className="eyebrow section-eyebrow">{blogEyebrow}</span>
             <h2
               className="display-large"
               style={{ color: "var(--ink)", marginTop: "8px", marginBottom: "12px" }}
             >
-              Share your feedback
+              {blogTitle}
             </h2>
             <p className="body-text" style={{ color: "var(--ink-secondary)", maxWidth: "540px", margin: "0 auto" }}>
-              Use the contact page to send us your thoughts, comments, or suggestions.
+              {blogDesc}
             </p>
           </Reveal>
 

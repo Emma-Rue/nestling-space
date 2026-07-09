@@ -18,12 +18,12 @@ interface Post {
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID)
   const [activeTag, setActiveTag] = useState<string>('all')
 
   useEffect(() => {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-    if (!projectId) { setLoading(false); return }
+    if (!projectId) return
 
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production'
     const base = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}`

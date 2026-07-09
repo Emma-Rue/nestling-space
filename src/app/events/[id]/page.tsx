@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -43,6 +43,8 @@ export default function EventDetailPage() {
   const [reference, setReference] = useState('')
   const [pollCount, setPollCount] = useState(0)
 
+  const pollStatusRef = useRef<((ref: string, count: number) => Promise<void>) | null>(null)
+
   useEffect(() => {
     if (!eventId) return
     client.fetch(
@@ -71,16 +73,23 @@ export default function EventDetailPage() {
         setStage('success')
       } else {
         setPollCount(c => c + 1)
-        setTimeout(() => pollStatus(ref, count + 1), 3000)
+        setTimeout(() => pollStatusRef.current?.(ref, count + 1), 3000)
       }
     } catch {
-      setTimeout(() => pollStatus(ref, count + 1), 3000)
+      setTimeout(() => pollStatusRef.current?.(ref, count + 1), 3000)
     }
   }, [])
 
   useEffect(() => {
+    pollStatusRef.current = pollStatus
+  }, [pollStatus])
+
+  useEffect(() => {
     if (stage === 'polling' && reference) {
-      pollStatus(reference, pollCount)
+      const timer = setTimeout(() => {
+        pollStatus(reference, pollCount)
+      }, 0)
+      return () => clearTimeout(timer)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, reference])

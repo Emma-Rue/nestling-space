@@ -42,12 +42,12 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function EventsPage() {
   const [upcomingEvents, setUpcomingEvents] = useState<SanityEvent[]>([])
   const [previousEvents, setPreviousEvents] = useState<PreviousEvent[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID)
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
   useEffect(() => {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
-    if (!projectId) { setLoading(false); return }
+    if (!projectId) return
 
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production'
     const base = `https://${projectId}.api.sanity.io/v2024-01-01/data/query/${dataset}`
